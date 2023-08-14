@@ -1,0 +1,55 @@
+<div class="panel-header panel-header-sm">
+    <img src="./assets/img/logo_blank.png" alt="Logo" class="logo-image"> <!-- Aquí está tu logo -->
+</div>   
+<div class="main-content">
+    
+    <div class="col-md-6 offset-md-3">
+
+      <!-- New Registration Form -->
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Login</h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label for="phone">Numero Celular</label>
+                  <input formControlName="telefono" name="phone" id="phone" type="tel" class="form-control" placeholder="Numero Celular">
+                  <div *ngIf="loginForm.controls.telefono.touched && loginForm.controls.telefono.invalid" class="text-danger">
+                    Por favor ingrese un número de teléfono válido.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                    <label for="regCode">Codigo de 4 Digitos</label>
+                    <input formControlName="clave" name="regCode" id="regCode" type="text" class="form-control" placeholder="Codigo Registro" maxlength="4" pattern="\d{4}" (keypress)="numericOnly($event)">
+                    
+                  <div *ngIf="loginForm.controls.clave.touched && loginForm.controls.clave.invalid" class="text-danger">
+                    Ingrese un código válido de 4 dígitos.
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            
+
+            <div class="row">
+              <div class="col-md-12">
+                <button type="submit" [disabled]="!loginForm.valid" class="btn btn-primary btn-block">Iniciar Sesión</button>
+              </div>
+            </div>
+          </form>
+          <div class="row mt-3">
+            <div class="col-md-12 text-center">
+                <p>No tienes una cuenta, <a href="/auth/registro">Registrate</a>.</p>
+            </div>
+        </div>
+        </div>
+      </div>
+      <!-- End of New Registration Form -->
+
+    </div>
+</div>

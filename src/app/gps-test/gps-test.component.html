@@ -1,0 +1,111 @@
+<audio id="startAudio" src="assets/sound/start.mp3"></audio>
+<audio id="endAudio" src="assets/sound/end.mp3"></audio>
+
+<div class="panel-header panel-header-lg">
+    <div class="gps-map"></div> 
+
+</div>
+
+<div class="main-content">
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">Geolocalización</h5>
+          <h4 class="card-title">Tiempo: {{ timingService.timeElapsed * 1000 | date:'mm:ss' }}</h4>
+        </div>
+        <div class="card-body">
+          <div *ngIf="distanceToStart < 10" class="alert alert-info">
+            <span>Estás cerca del punto de inicio de la ruta.</span>
+          </div>
+          <div class="table-full-width table-responsive">
+            <table class="table">
+              <tbody>
+                <tr>
+                    <td class="text-left">Latitud actual: {{ currentLatitude }}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">Longitud actual: {{ currentLongitude }}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">Punto de inicio: {{ timingService.startPoint?.latitude }}, {{ timingService.startPoint?.longitude }}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">Punto final: {{ timingService.endPoint?.latitude }}, {{ timingService.endPoint?.longitude }}</td>
+                  </tr>
+                
+                  <tr>
+                    <td class="text-left">punto de inicio:: {{ distanceToStart.toFixed(2) }} metros</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">punto intermedio: {{ distanceToIntermediate.toFixed(2) }} metros</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">punto final: {{ distanceToEnd.toFixed(2) }} metros</td>
+                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <i class="now-ui-icons loader_refresh spin"></i> Tiempo Real
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">Presteza</h5>
+          <h4 class="card-title">Velocidad</h4>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td class="text-left">Velocidad actual: {{ currentSpeed | number: '1.2-2' }} m/s</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">Velocidad actual: {{ currentSpeedKph | number: '1.2-2' }} km/h</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">Velocidad promedio: {{ averageSpeed | number: '1.2-2' }} km/h</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">Velocidad máxima: {{ maxSpeed | number: '1.2-2' }} km/h</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">total recorrido: {{ totalDistance / 1000 | number: '1.2-2' }} km</td>
+                      </tr>
+                </tbody>
+              </table>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <i class="now-ui-icons loader_refresh spin"></i> Tiempo Real
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">Testing</h5>
+          <h4 class="card-title">Acciones</h4>
+        </div>
+        <div class="card-body">
+            <button class="btn btn-primary" (click)="setStartPoint()" [disabled]="timingService.startPoint">Establecer inicio</button>
+            <button class="btn btn-success" (click)="setEndPoint()" [disabled]="!timingService.startPoint || timingService.endPoint">Establecer final</button>
+            <button class="btn btn-danger" (click)="reset()">Reiniciar</button>
+            
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <i class="now-ui-icons media-1_button-play"></i> User Accions
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,103 @@
+.info-box {
+    position: absolute;
+    top: 20px;      // Coloca el cuadro en la posición que desees
+    left: 20px;     // Coloca el cuadro en la posición que desees
+    background: rgba(255, 255, 255, 0.8);  // Color de fondo semi transparente
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    
+    h2 {
+      margin: 0;
+      color: #333;
+    }
+  
+    p {
+      margin: 5px 0 0 0;
+      color: #666;
+    }
+    
+  
+
+  }
+  
+  .text-reloj{
+    font-size: 4.57em;
+    font-family: 'Anton', sans-serif;
+  }
+
+  .gps-map {
+    position: relative; /* Esto convierte al mapa en el contenedor relativo para los elementos absolutos dentro de él */
+}
+@media (max-width: 576px) {
+  .speedmeter {
+      bottom: 10px;
+      left: 10px;
+      /* Aquí puedes hacer cualquier otro ajuste, como cambiar el tamaño de la fuente, etc. */
+  }
+}
+
+  .speedmeter {
+    /*   text-align: center; */
+    position: absolute; /* Posicionamos el speedmeter de manera absoluta respecto al gps-map */
+    bottom: 20px;       /* 20px desde el borde inferior, ajusta según prefieras */
+    left: 20px;        /* 20px desde el borde derecho, ajusta según prefieras */
+    z-index: 1000; 
+    }
+    .dot {
+      position: absolute;
+      width: 64px;
+      height: 4px;
+      background: rgb(222, 0, 0);
+        transform: rotate(0deg);
+    /*   border: 2px solid #3ADA98; */
+      bottom: 13.5px;
+      left: 1px;
+    /*   animation: speed 5s linear infinite; */
+    transform-origin: 100% center;
+    }
+    
+    .dot:before {
+      content: '';
+      border: 2px solid #3ADA98;
+      background: transparent;
+      border-radius: 50%;
+      width: 4px;
+      height: 4px;
+      position: absolute;
+      top: 0;
+      left: 0px;
+      right: 0;
+      bottom:0px;
+    }
+    
+    
+    @keyframes speed {
+      100% {
+        transform: rotate(180deg) translate(-11.5px, 0px);
+        transform-origin: 100% center;
+      }
+    }
+    
+    
+    .meter {
+      width: 130px;
+      position: absolute;
+      bottom: 5px;
+    /*   left: 45px; */
+    /*   transform: translate(-20px, -20px); */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      font-family: arial;
+      text-align: center;
+    }
+    
+    .meter p {
+      margin: 0;
+      padding: 0;
+    }
+    
+    #number {
+      font-size: 20px;
+    }
