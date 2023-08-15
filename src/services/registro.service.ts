@@ -63,13 +63,13 @@ export class RegistroService {
     return this.http.get<Vehicle[]>(`${environment.apiBaseUrl}/obtenergaraje/${id}`);
   }
 
-
   editCarGaraje(data: any, id: number) {
     return this.http.put(`${environment.apiBaseUrl}/editarvehiculo/${id}`, data);
-  }
+}
+
 
   DeleteCarGaraje(data: any, id: number) {
-    return this.http.delete(`${environment.apiBaseUrl}/editarvehiculo/${id}`, data);
+    return this.http.delete(`${environment.apiBaseUrl}/eliminarvehiculo/${id}`, data);
   }
 
   logout() {
