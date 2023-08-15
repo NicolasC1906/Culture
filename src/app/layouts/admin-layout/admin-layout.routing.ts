@@ -12,6 +12,7 @@ import { GpsTestComponent } from '../../gps-test/gps-test.component';
 import { MapTestComponent } from '../../map-test/map-test.component';
 import { AuthGuard } from '../../guards/auth.guard';
 import { HomeComponent } from '../../home/home.component';
+import { EventsComponent } from '../../eventos/events/events.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'home',      component: HomeComponent },
@@ -25,4 +26,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'upgrade',        component: UpgradeComponent, canActivate: [AuthGuard]  },
     { path: 'gps-test',        component: GpsTestComponent , canActivate: [AuthGuard]  },
     { path: 'map-test',        component: MapTestComponent, canActivate: [AuthGuard] },
+    { path: 'event',        component: EventsComponent, canActivate: [AuthGuard] },
+
 ];

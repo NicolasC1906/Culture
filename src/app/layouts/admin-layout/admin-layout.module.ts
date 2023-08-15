@@ -54,7 +54,7 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
     TypographyComponent,
     IconsComponent,
     MapsComponent,
-    NotificationsComponent
+    NotificationsComponent,
   ]
 })
 
