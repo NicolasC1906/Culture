@@ -14,12 +14,18 @@ export interface City {
 }
 
 
+
+
+
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
+
+   // Lista de vehículos:
+   public vehicles: any[] = [];
 
   // Sliderç
   public isCollapsed = true;
@@ -112,6 +118,7 @@ export class UserProfileComponent implements OnInit {
     this.initForm();
     this.loadUserProfile()
     this.garajeInitForm()
+    this.loadUserVehicles();
 
 
   }
@@ -154,15 +161,44 @@ export class UserProfileComponent implements OnInit {
     enviarDatosGaraje() {
       const formData = this.garajeForm.value;
       console.log('Datos enviados a la API:', formData);
-      this.isLoading = true;
+      this.isUpdating = true;
       this.registroService.crearGaraje(formData, this.userId).subscribe(response => {
         // Aquí manejas la respuesta, por ejemplo, mostrar un mensaje de éxito
-        this.isLoading = false;
-        this.toastr.success('Información del garaje actualizada con éxito.');
+
+         // Manejar respuesta, por ejemplo mostrar un mensaje de éxito.
+         this.toastr.success('La información se ha actualizado correctamente.', 'Atención', {
+          timeOut: 8000,
+          closeButton: true,
+          enableHtml: true,
+          toastClass: "alert alert-info alert-with-icon",
+          positionClass: 'toast-top-right',
+        }).onHidden.subscribe(() => {
+          this.isUpdating = false;
+          location.reload();
+        });
       }, error => {
         this.toastr.error('Hubo un error al actualizar la información del garaje.');
       });
     }
+
+     // Método para cargar los vehículos del usuario:
+     loadUserVehicles() {
+      this.isUpdating = true; // Mostramos el spinner antes de empezar la solicitud
+
+      this.registroService.getUsuarioGaraje(this.userId).subscribe(
+        response => {
+          this.vehicles = [response];
+        },
+        error => {
+          this.toastr.error('Hubo un error al cargar los vehículos del usuario.');
+        },
+        () => {
+          this.isUpdating = false; // Ocultamos el spinner al finalizar la solicitud (ya sea con éxito o con error)
+        }
+      );
+    }
+
+
 
 
     actualizarInformacion() {
@@ -171,8 +207,6 @@ export class UserProfileComponent implements OnInit {
       this.isUpdating = true;
 
       this.registroService.completarPerfil(formData).subscribe(response => {
-        // Desactivar el loading
-        this.isUpdating = false;
         // Manejar respuesta, por ejemplo mostrar un mensaje de éxito.
         this.toastr.success('La información se ha actualizado correctamente.', 'Atención', {
           timeOut: 8000,
@@ -181,6 +215,7 @@ export class UserProfileComponent implements OnInit {
           toastClass: "alert alert-info alert-with-icon",
           positionClass: 'toast-top-right',
         }).onHidden.subscribe(() => {
+          this.isUpdating = false;
           location.reload();
         });
       }, error => {
@@ -244,7 +279,7 @@ export class UserProfileComponent implements OnInit {
         context.scale(scaleFactor, scaleFactor);
 
         // Pinta el fondo negro
-        context.fillStyle = 'black';
+        context.fillStyle = '#2c2c2c';
         context.fillRect(0, 0, canvas.width, canvas.height);
 
         // Establece las propiedades de la fuente

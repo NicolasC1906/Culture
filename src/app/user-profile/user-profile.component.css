@@ -94,3 +94,43 @@
   object-fit: cover; /* Esto asegura que la imagen cubra el espacio sin estirarse ni distorsionarse */
   object-position: center; /* Centra la imagen en el espacio disponible */
 }
+
+
+.image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-img-top {
+  width: 100%;
+  height: auto;
+}
+
+.image-label {
+  position: absolute;
+  left: 10px;
+  padding: 5px 10px;
+  background-color: rgba(0,0,0,0.5); /* fondo semitransparente */
+  color: #fff; /* texto blanco */
+  border-radius: 5px;
+}
+
+.top-label {
+  top: 10px;
+}
+
+.bottom-label {
+  bottom: 10px;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: center;  /* Centra horizontalmente */
+  gap: 5px;  /* Espacio entre botones. Si tu navegador no soporta 'gap' con flexbox, usa margin en su lugar. */
+}
+
+/* Si el navegador no soporta 'gap' con flexbox */
+.btn-group .btn:not(:last-child) {
+  margin-right: 5px;
+}
+

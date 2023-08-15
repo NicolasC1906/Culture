@@ -10,7 +10,7 @@
         <!-- Card user info -->
         <!-- <div *ngIf="isLoading" class="loading">Cargando...</div> -->
         <div class="card-body">
-          <form [formGroup]="profileForm" (ngSubmit)="actualizarInformacion()" >
+          <form [formGroup]="profileForm">
             <div class="row">
               <div class="col-md-5 pr-1">
                 <div class="form-group">
@@ -35,7 +35,7 @@
 
               <div class="col-md-5 pr-1">
                 <div class="form-group">
-                  <label>Tipo usuario </label>
+                  <label>Rol</label>
                   <input type="text" class="form-control"  disabled="" placeholder="" value="{{ userProfile.role }}">
                 </div>
               </div>
@@ -44,7 +44,7 @@
 
             <hr>
             <div class="row">
-              <div class="col-md-6 pr-1">
+              <div class="col-md-5 pr-1">
                 <div class="form-group">
                   <label for="email">Correo electronico</label>
                   <input name="email" id="email" type="email" class="form-control"formControlName="email" >
@@ -65,7 +65,7 @@
                 </div>
             </div>
 
-
+<!--
               <div class="col-md-5 pr-1">
                 <div class="form-group">
                   <label>Contraseña</label>
@@ -78,7 +78,7 @@
                   <label>Nueva Contraseña</label>
                   <input type="password" class="form-control" placeholder="Nueva">
                 </div>
-              </div>
+              </div> -->
 
             </div>
 
@@ -104,10 +104,19 @@
             <button type="button"
             class="btn btn-primary"
             (click)="collapse1.toggle()"
-            [attr.aria-expanded]="!isCollapsed1"
-            ><i class="now-ui-icons ui-1_simple-add"></i>
-                Añadir vehículo
-            </button>
+            [attr.aria-expanded]="!isCollapsed1">
+
+        <!-- Mostrar esto cuando isUpdating es true -->
+        <ng-container *ngIf="isUpdating">
+            <i class="now-ui-icons loader_refresh spin"></i> Cargando vehículos
+        </ng-container>
+
+        <!-- Mostrar esto cuando isUpdating es false -->
+        <ng-container *ngIf="!isUpdating">
+            <i class="now-ui-icons ui-1_simple-add"></i> Añadir vehículo
+        </ng-container>
+    </button>
+
 
         </div>
         <hr>
@@ -116,12 +125,12 @@
           <div #collapse1="ngbCollapse" [(ngbCollapse)]="isCollapsed1">
             <div class="card">
               <div class="card-body">
-                <form [formGroup]="garajeForm" (ngSubmit)="enviarDatosGaraje()">
+                <form [formGroup]="garajeForm">
                   <div class="row">
                     <div class="col-md-5 pr-1">
                       <div class="form-group">
                         <label>ID Culture Car</label>
-                        <input type="text" class="form-control" disabled="" formControlName="photo">
+                        <input type="text" class="form-control"  formControlName="photo">
                       </div>
                     </div>
 
@@ -142,7 +151,7 @@
                     <div class="col-md-5 pr-1">
                       <div class="form-group">
                         <label>Año</label>
-                        <input type="text" class="form-control" formControlName="year">
+                        <input type="number" class="form-control" formControlName="year">
                       </div>
                     </div>
 
@@ -172,7 +181,7 @@
 
                   <hr>
 
-                  <button class="btn btn-primary update-btn" (click)="actualizarInformacion()">
+                  <button class="btn btn-primary update-btn" (click)="enviarDatosGaraje()">
                     <i class="now-ui-icons loader_refresh" [ngClass]="{'spin': isUpdating}"></i>
                     {{ isUpdating ? 'Generando Cambios' : 'Guardar Vehiculo' }}
                 </button>
@@ -211,7 +220,7 @@
                     <div class="col-md-5 pr-1">
                       <div class="form-group">
                         <label>Año</label>
-                        <input type="text" class="form-control" formControlName="year">
+                        <input type="number" class="form-control" formControlName="year">
                       </div>
                     </div>
 
@@ -252,30 +261,34 @@
             </div>
           </div>
 
-          <div class="card margin" style="width: 20rem;">
-            <img class="card-img-top"
-                 src="https://http2.mlstatic.com/D_NQ_NP_2X_724626-MCO70388302745_072023-F.webp"
-                 alt="Card image cap"
-                 onerror="this.onerror=null; this.src='./assets/img/logo_blank.png';">
+          <div *ngFor="let vehicle of vehicles" class="card margin" style="width: 20rem;">
+            <div class="image-container">
+              <img class="card-img-top"
+                   [src]="vehicle.photo"
+                   alt="Card image of {{ vehicle.brand }}"
+                   onerror="this.onerror=null; this.src='./assets/img/logo_blank.png';">
+                   <div class="image-label top-label">{{ vehicle.model }}</div>
+                   <div class="image-label bottom-label">{{ vehicle.year }}</div>
+            </div>
             <div class="card-body">
-                <h4 class="card-title">Card title</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-
+              <h3 class="card-title">{{ vehicle.brand }}</h3>
+              <div class="btn-group">
                 <button type="button"
                         class="btn btn-info"
                         (click)="collapse2.toggle()"
                         [attr.aria-expanded]="!isCollapsed2">
                     <i class="now-ui-icons ui-2_settings-90"></i> Editar
                 </button>
-
-
-
                 <button type="button"
                         class="btn btn-danger">
                     <i class="now-ui-icons ui-1_simple-remove"></i> Eliminar
                 </button>
             </div>
-        </div>
+
+            </div>
+          </div>
+
+
 
 
         </div>

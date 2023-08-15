@@ -13,6 +13,16 @@ interface UserProfileResponse {
   // ... cualquier otra propiedad que esperes
 }
 
+export interface Vehicle {
+  id: number;
+  brand: string;
+  model: string;
+  year: number;
+  photo: string;
+  createdAt: string;
+  updatedAt: string;
+  UserId: number;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -46,11 +56,11 @@ export class RegistroService {
   }
 
   crearGaraje(data: any, id: number) {
-    return this.http.post(`${environment.apiBaseUrl}/creargaraje/${id}`, data);
+    return this.http.post(`${environment.apiBaseUrl}/agregarvehiculo/${id}`, data);
   }
 
-  getUsuarioGaraje(id: number): Observable<UserProfileResponse> {
-    return this.http.get<UserProfileResponse>(`${environment.apiBaseUrl}/obtenergaraje/${id}`);
+  getUsuarioGaraje(id: number) {
+    return this.http.get<Vehicle>(`${environment.apiBaseUrl}/obtenergaraje/${id}`);
   }
 
   editCarGaraje(data: any, id: number) {
