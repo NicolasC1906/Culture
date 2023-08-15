@@ -30,13 +30,13 @@ export class NavbarComponent implements OnInit {
     ngOnInit(){
       const token = localStorage.getItem('token');
       this.hasToken = !!token; // this will return true if token exists, else false
-  
+
       if (this.hasToken) {
           this.listTitles = ROUTES_WITH_TOKEN.filter(listTitle => listTitle);
       } else {
           this.listTitles = ROUTES_WITHOUT_TOKEN.filter(listTitle => listTitle);
       }
-    
+
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
       this.router.events.subscribe((event) => {
@@ -48,7 +48,7 @@ export class NavbarComponent implements OnInit {
         }
       });
     }
-    
+
 
     collapse(){
       this.isCollapsed = !this.isCollapsed;
@@ -163,7 +163,7 @@ export class NavbarComponent implements OnInit {
               return this.listTitles[item].title;
           }
       }
-      return 'Dashboard';
+      return 'home';
     }
 
     onLogout() {
