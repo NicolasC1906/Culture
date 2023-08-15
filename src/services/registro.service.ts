@@ -59,9 +59,10 @@ export class RegistroService {
     return this.http.post(`${environment.apiBaseUrl}/agregarvehiculo/${id}`, data);
   }
 
-  getUsuarioGaraje(id: number) {
-    return this.http.get<Vehicle>(`${environment.apiBaseUrl}/obtenergaraje/${id}`);
+  getUsuarioGaraje(id: number): Observable<Vehicle[]> {
+    return this.http.get<Vehicle[]>(`${environment.apiBaseUrl}/obtenergaraje/${id}`);
   }
+
 
   editCarGaraje(data: any, id: number) {
     return this.http.put(`${environment.apiBaseUrl}/editarvehiculo/${id}`, data);

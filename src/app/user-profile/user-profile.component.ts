@@ -181,22 +181,29 @@ export class UserProfileComponent implements OnInit {
       });
     }
 
-     // Método para cargar los vehículos del usuario:
-     loadUserVehicles() {
+    loadUserVehicles() {
       this.isUpdating = true; // Mostramos el spinner antes de empezar la solicitud
 
       this.registroService.getUsuarioGaraje(this.userId).subscribe(
-        response => {
-          this.vehicles = [response];
-        },
-        error => {
-          this.toastr.error('Hubo un error al cargar los vehículos del usuario.');
-        },
-        () => {
-          this.isUpdating = false; // Ocultamos el spinner al finalizar la solicitud (ya sea con éxito o con error)
-        }
+          response => {
+              this.vehicles = response.map(vehicle => {
+                // Agregar el prefijo para imágenes Base64 a la propiedad 'photo'
+                vehicle.photo = 'data:image/jpeg;base64,' + vehicle.photo;
+                return vehicle;
+              });
+              //console.log(this.vehicles);
+          },
+          error => {
+              this.toastr.error('Hubo un error al cargar los vehículos del usuario.');
+          },
+          () => {
+              this.isUpdating = false; // Ocultamos el spinner al finalizar la solicitud (ya sea con éxito o con error)
+          }
       );
     }
+
+
+
 
 
 
