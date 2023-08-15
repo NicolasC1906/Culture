@@ -3,25 +3,26 @@
 <div class="main-content">
   <div class="row">
     <div class="col-md-8">
-      <div class="card"> 
+      <div class="card">
         <div class="card-header">
           <h5 class="title">Editar perfil usuario</h5>
         </div>
         <!-- Card user info -->
+        <!-- <div *ngIf="isLoading" class="loading">Cargando...</div> -->
         <div class="card-body">
           <form [formGroup]="profileForm" (ngSubmit)="actualizarInformacion()" >
             <div class="row">
               <div class="col-md-5 pr-1">
                 <div class="form-group">
                   <label>Nombre Completo</label>
-                  <input type="text" class="form-control" formControlName="name" value="{{ userProfile.name }}">
+                  <input type="text" class="form-control" formControlName="name">
                 </div>
               </div>
 
               <div class="col-md-5 pr-1">
                 <div class="form-group">
                   <label>Usuario</label>
-                  <input type="text" class="form-control" formControlName="username" value="{{ userProfile.username }}">
+                  <input type="text" class="form-control" formControlName="username">
                 </div>
               </div>
 
@@ -46,17 +47,25 @@
               <div class="col-md-6 pr-1">
                 <div class="form-group">
                   <label for="email">Correo electronico</label>
-                  <input name="email" id="email" type="email" class="form-control"formControlName="email" value="{{ userProfile.email }}">
+                  <input name="email" id="email" type="email" class="form-control"formControlName="email" >
                 </div>
               </div>
 
+
               <div class="col-md-5 pr-1">
                 <div class="form-group">
-                  <label>Ciudad</label>
-                  <input type="text" class="form-control" formControlName="city" value="{{ userProfile.city }}">
+                    <label>Ciudad</label>
+
+                    <!-- Dropdown para seleccionar ciudad -->
+                    <select [(ngModel)]="userProfile.city" class="form-control" formControlName="city">
+                        <option *ngFor="let city of filteredCities">
+                            {{ city.name }}
+                        </option>
+                    </select>
                 </div>
-              </div>
-             
+            </div>
+
+
               <div class="col-md-5 pr-1">
                 <div class="form-group">
                   <label>Contraseña</label>
@@ -74,57 +83,210 @@
             </div>
 
             <hr>
-           
-            <button class="btn btn-primary update-btn" >Actualizar Información</button>
+
+            <button class="btn btn-primary update-btn" (click)="actualizarInformacion()">
+              <i class="now-ui-icons loader_refresh" [ngClass]="{'spin': isUpdating}"></i>
+              {{ isUpdating ? 'Generando Cambios' : 'Actualizar Información' }}
+          </button>
+
 
           </form>
         </div>
 
         <!-- Card info car -->
-        
+
       </div>
 
       <div class="card">
-        <div class="card-header">
-          <h5 class="title">Garaje</h5>
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="title">Garaje</h5>
+            <!-- Botón que dispara el modal -->
+            <button type="button"
+            class="btn btn-primary"
+            (click)="collapse1.toggle()"
+            [attr.aria-expanded]="!isCollapsed1"
+            ><i class="now-ui-icons ui-1_simple-add"></i>
+                Añadir vehículo
+            </button>
+
         </div>
+        <hr>
         <!-- Card user info -->
         <div class="card-body">
-          
-          <!-- <div class="figure-container">
-          <figure class="snip1529">
-            <img src="https://rodaticarros.com.co/images/listings/2023-03/2d5e0a78-1679228228-18.jpg" alt="pr-sample13" />
-            <div class="date"><span class="day">2022</span><span class="month">AMG</span></div>
-            <figcaption>
-              <h4>Mercedes-Benz Clase GLA</h4>
-              <p>1.6</p>
-            </figcaption>
-            <div class="hover"><i class="ion-android-open"></i></div>
-            <a href="#"></a>
-          </figure>
+          <div #collapse1="ngbCollapse" [(ngbCollapse)]="isCollapsed1">
+            <div class="card">
+              <div class="card-body">
+                <form [formGroup]="garajeForm" (ngSubmit)="enviarDatosGaraje()">
+                  <div class="row">
+                    <div class="col-md-5 pr-1">
+                      <div class="form-group">
+                        <label>ID Culture Car</label>
+                        <input type="text" class="form-control" disabled="" formControlName="photo">
+                      </div>
+                    </div>
 
-          <figure class="snip1529">
-            <img src="./assets/img/logo_blank.png" alt="pr-sample13" />
-            <div class="date"><span class="day">2023</span><span class="month">DRIVY</span></div>
-            <figcaption>
-              <h4></h4>
-              <p></p>
-            </figcaption>
-            <div class="hover"><i class="ion-android-open"></i></div>
-            <a href="#"></a>
-          </figure>
-        </div> -->
+                    <div class="col-md-5 pr-1">
+                      <div class="form-group">
+                        <label>Marca</label>
+                        <input type="text" class="form-control" formControlName="brand">
+                      </div>
+                    </div>
 
-        
+                    <div class="col-md-5 pr-1">
+                      <div class="form-group">
+                        <label>Modelo</label>
+                        <input type="text" class="form-control" formControlName="model">
+                      </div>
+                    </div>
+
+                    <div class="col-md-5 pr-1">
+                      <div class="form-group">
+                        <label>Año</label>
+                        <input type="text" class="form-control" formControlName="year">
+                      </div>
+                    </div>
+
+
+
+                    <div class="col-md-5 pr-1">
+                      <div class="form-group">
+                          <label>Subir Foto </label>
+                          <div class="custom-file-upload">
+                              <input type="file" id="fileInput" (change)="handleFileInput($event)" class="form-control-file" hidden>
+                              <label for="fileInput">
+                                  <i class="fas fa-paperclip"></i> Elijir el archivo (JPG, PNG, JEPG)
+                              </label>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="card margin" style="width: 20rem;">
+                    <img class="card-img-top" *ngIf="imageToShow" [src]="imageToShow" alt="Card image cap">
+
+                </div>
+
+
+
+
+                  </div>
+
+
+                  <hr>
+
+                  <button class="btn btn-primary update-btn" (click)="actualizarInformacion()">
+                    <i class="now-ui-icons loader_refresh" [ngClass]="{'spin': isUpdating}"></i>
+                    {{ isUpdating ? 'Generando Cambios' : 'Guardar Vehiculo' }}
+                </button>
+
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div #collapse2="ngbCollapse" [(ngbCollapse)]="isCollapsed2">
+            <div class="card">
+              <div class="card-body">
+                <form [formGroup]="garajeForm" (ngSubmit)="enviarDatosGaraje()">
+                  <div class="row">
+                    <div class="col-md-5 pr-1">
+                      <div class="form-group">
+                        <label>ID Culture Car</label>
+                        <input type="text" class="form-control" disabled="" formControlName="photo">
+                      </div>
+                    </div>
+
+                    <div class="col-md-5 pr-1">
+                      <div class="form-group">
+                        <label>Marca</label>
+                        <input type="text" class="form-control" formControlName="brand">
+                      </div>
+                    </div>
+
+                    <div class="col-md-5 pr-1">
+                      <div class="form-group">
+                        <label>Modelo</label>
+                        <input type="text" class="form-control" formControlName="model">
+                      </div>
+                    </div>
+
+                    <div class="col-md-5 pr-1">
+                      <div class="form-group">
+                        <label>Año</label>
+                        <input type="text" class="form-control" formControlName="year">
+                      </div>
+                    </div>
+
+
+
+                    <div class="col-md-5 pr-1">
+                      <div class="form-group">
+                          <label>Subir Foto </label>
+                          <div class="custom-file-upload">
+                              <input type="file" id="fileInput" (change)="handleFileInput($event)" class="form-control-file" hidden>
+                              <label for="fileInput">
+                                  <i class="fas fa-paperclip"></i> Elijir el archivo (JPG, PNG, JEPG)
+                              </label>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="card margin" style="width: 20rem;">
+                    <img class="card-img-top" *ngIf="imageToShow" [src]="imageToShow" alt="Card image cap">
+
+                </div>
+
+
+
+
+                  </div>
+
+
+                  <hr>
+
+
+                  <button class="btn btn-primary update-btn" (click)="actualizarInformacion()">
+                    <i class="now-ui-icons loader_refresh" [ngClass]="{'spin': isUpdating}"></i>
+                    {{ isUpdating ? 'Generando Cambios' : 'Actualizar Vehiculo' }}
+                </button>
+
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="card margin" style="width: 20rem;">
+            <img class="card-img-top"
+                 src="https://http2.mlstatic.com/D_NQ_NP_2X_724626-MCO70388302745_072023-F.webp"
+                 alt="Card image cap"
+                 onerror="this.onerror=null; this.src='./assets/img/logo_blank.png';">
+            <div class="card-body">
+                <h4 class="card-title">Card title</h4>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+                <button type="button"
+                        class="btn btn-info"
+                        (click)="collapse2.toggle()"
+                        [attr.aria-expanded]="!isCollapsed2">
+                    <i class="now-ui-icons ui-2_settings-90"></i> Editar
+                </button>
+
+
+
+                <button type="button"
+                        class="btn btn-danger">
+                    <i class="now-ui-icons ui-1_simple-remove"></i> Eliminar
+                </button>
+            </div>
+        </div>
+
 
         </div>
 
-        <!-- Card info car -->
-        
-      </div>
+    </div>
 
-    
-    
+
+
+
+
+
     </div>
     <div class="col-md-4">
       <div class="card card-user">
@@ -135,12 +297,12 @@
           <div class="author">
             <a href="#">
               <img class="avatar border-gray" id="dynamicAvatar" alt="user">
-              <h5 class="title" style="color: red;">{{ userProfile.name }}</h5>
+              <h5 class="title" style="color: red;">{{ userProfile.username }}</h5>
             </a>
             <p class="description">
-              {{ userProfile.username }}
+              {{ userProfile.name }}
             </p>
-           
+
           </div>
           <hr>
           <div class="qr-container">
@@ -149,18 +311,26 @@
                 qrc-class="my-custom-qr-class"
                 qrc-version="4"
                 qrc-errorCorrectionLevel="M">
-                
+
             </ngx-qrcode>
             <img src="./assets/img/ms-icon.png" class="qr-icon">
         </div>
-        
-        
+
+
         </div>
-       
-      
+
+
         </div>
-        
+
       </div>
 
     </div>
   </div>
+
+
+
+
+
+
+
+

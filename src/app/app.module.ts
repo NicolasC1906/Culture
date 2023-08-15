@@ -21,6 +21,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { AddCarsComponent } from './Modals/add-cars/add-cars.component';
 
 
 
@@ -47,6 +48,7 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     GpsTestComponent,
     MapTestComponent,
     HomeComponent,
+    AddCarsComponent,
 
   ],
   providers: [],

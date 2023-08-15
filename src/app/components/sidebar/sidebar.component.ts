@@ -15,7 +15,8 @@ export const ROUTES_WITHOUT_TOKEN: RouteInfo[] = [
 
 export const ROUTES_WITH_TOKEN: RouteInfo[] = [
     { path: '/home', title: 'inicio',  icon: 'design_app', class: '' },
-    { path: '/user-profile', title: 'Perfil',  icon:'users_single-02', class: '' }
+    { path: '/user-profile', title: 'Perfil',  icon:'users_single-02', class: '' },
+    { path: '/map-test', title: 'map-test',  icon:'location_map-big', class: '' }
 ];
 
 @Component({

@@ -6,8 +6,9 @@ import { Observable } from 'rxjs';
 
 
 interface UserProfileResponse {
+  Garages: any;
   role: any;
-  phoneNumber: any; 
+  phoneNumber: any;
   Profile: any;
   // ... cualquier otra propiedad que esperes
 }
@@ -35,29 +36,41 @@ export class RegistroService {
     };
     return this.http.post(`${environment.apiBaseUrl}/login`, body);
   }
-  
+
   getUsuarioProfile(id: number): Observable<UserProfileResponse> {
     return this.http.get<UserProfileResponse>(`${environment.apiBaseUrl}/usuario/${id}`);
   }
-  
+
   completarPerfil(data: any) {
     return this.http.post(`${environment.apiBaseUrl}/completarperfil`, data);
   }
-  // completarPerfil(data: any) {
-  //   // En caso de que tu API espere el userId en la URL, modifica aquí:
-  //   return this.http.post(`${environment.apiBaseUrl}/completarperfil/${data.userId}`, data);
-  // }
-  
+
+  crearGaraje(data: any, id: number) {
+    return this.http.post(`${environment.apiBaseUrl}/creargaraje/${id}`, data);
+  }
+
+  getUsuarioGaraje(id: number): Observable<UserProfileResponse> {
+    return this.http.get<UserProfileResponse>(`${environment.apiBaseUrl}/obtenergaraje/${id}`);
+  }
+
+  editCarGaraje(data: any, id: number) {
+    return this.http.put(`${environment.apiBaseUrl}/editarvehiculo/${id}`, data);
+  }
+
+  DeleteCarGaraje(data: any, id: number) {
+    return this.http.delete(`${environment.apiBaseUrl}/editarvehiculo/${id}`, data);
+  }
 
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('expiresIn');
+    localStorage.removeItem('idUser');
     // Redirigir al home
     this.router.navigate(['/home']).then(() => {
         window.location.reload();
     });
 }
 
-  
+
 
 }

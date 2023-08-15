@@ -15,6 +15,9 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./gps-test.component.scss']
 })
 export class GpsTestComponent implements OnInit, OnDestroy {
+
+
+
   public currentLatitude: number = 0;
   public currentLongitude: number = 0;
 
@@ -32,8 +35,8 @@ export class GpsTestComponent implements OnInit, OnDestroy {
   private route: L.GeoJSON<GeoJSON.LineString> | null = null; // Ruta GeoJSON
 
   private startCoordinate = [-74.0837406, 4.5468784];
-  private intermediateCoordinate = [-74.08502912042614, 4.561155403254483]; 
-  private endCoordinate = [-74.08437241850753, 4.547184527750056]; 
+  private intermediateCoordinate = [-74.08502912042614, 4.561155403254483];
+  private endCoordinate = [-74.08437241850753, 4.547184527750056];
 
   public distanceToStart: number = 0; // Distancia al punto de inicio en metros
   public distanceToIntermediate: number = 0; // Distancia al punto intermedio en metros
@@ -44,7 +47,7 @@ export class GpsTestComponent implements OnInit, OnDestroy {
   private noSleep: any;
 
 
-  
+
 
   constructor(public timingService: TimingService, private locationService: LocationService, private toastr: ToastrService) {
     this.noSleep = new NoSleep();
@@ -55,7 +58,7 @@ export class GpsTestComponent implements OnInit, OnDestroy {
     this.noSleep.enable();
     localStorage.removeItem('timingData');
     // Corrige el enlace a las imágenes de los marcadores
-    
+
     const iconRetinaUrl = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon-2x.png';
     const iconUrl = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon.png';
     const shadowUrl = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-shadow.png';
@@ -66,7 +69,7 @@ export class GpsTestComponent implements OnInit, OnDestroy {
       iconSize: [25, 41],
       iconAnchor: [12, 41],
       popupAnchor: [1, -34],
-      tooltipAnchor: [16, -28], 
+      tooltipAnchor: [16, -28],
       shadowSize: [41, 41]
     });
 
@@ -96,7 +99,7 @@ export class GpsTestComponent implements OnInit, OnDestroy {
   }).addTo(this.map);
 
     // Configura la ruta  aquí (si se desea)
-   
+
 
     this.locationService.watchLocation((speed, timestamp, latitude, longitude) => {
       // console.log("Speed:", speed);
@@ -109,7 +112,7 @@ export class GpsTestComponent implements OnInit, OnDestroy {
       this.distanceToStart = this.calculateDistance(latitude, longitude, this.startCoordinate[1], this.startCoordinate[0]);
       this.distanceToIntermediate = this.calculateDistance(latitude, longitude, this.intermediateCoordinate[1], this.intermediateCoordinate[0]);
       this.distanceToEnd = this.calculateDistance(latitude, longitude, this.endCoordinate[1], this.endCoordinate[0]);
-    
+
       if (this.currentLocationMarker) {
         this.currentLocationMarker.setLatLng(new L.LatLng(latitude, longitude));
       } else {
@@ -117,10 +120,10 @@ export class GpsTestComponent implements OnInit, OnDestroy {
           this.currentLocationMarker = L.marker([latitude, longitude]).addTo(this.map);
           this.currentLocationMarker.bindPopup('Ubicación actual').openPopup();
         }
-        
+
       }
        // Aquí es donde actualizamos el centro del mapa
-  
+
 
       if (this.timingService.startPoint && !this.timingService.endPoint) {
         if (this.routePolyline) {
@@ -147,18 +150,18 @@ export class GpsTestComponent implements OnInit, OnDestroy {
       if (distanceToStart < tolerance) {
         this.setStartPoint()
         console.log('Pasando por el punto de inicio.');
-        
+
       }
-  
+
       if (distanceToIntermediate < tolerance) {
         console.log('Pasando por el punto intermedio.');
         this.playPointSound();
       }
-  
+
       if (distanceToEnd < toleranceEnd) {
         this.setEndPoint()
         console.log('Pasando por el punto final.');
-       
+
       }
 
     }, (error) => {
@@ -169,13 +172,13 @@ export class GpsTestComponent implements OnInit, OnDestroy {
   private calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
     var R = 6371; // Radio de la tierra en km
     var dLat = this.deg2rad(lat2 - lat1);  // Conversión de grados a radianes
-    var dLon = this.deg2rad(lon2 - lon1); 
-    var a = 
+    var dLon = this.deg2rad(lon2 - lon1);
+    var a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) * 
+      Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) *
       Math.sin(dLon / 2) * Math.sin(dLon / 2)
-    ; 
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)); 
+    ;
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     var d = R * c; // Distancia en km
     return d * 1000; // Distancia en metros
   }
@@ -188,7 +191,7 @@ export class GpsTestComponent implements OnInit, OnDestroy {
     if (this.route && this.map) {
       this.map.removeLayer(this.route);
     }
-  
+
     const geoJsonData: GeoJSON.Feature<GeoJSON.LineString> = {
       "type": "Feature",
       "properties": {},
@@ -200,7 +203,7 @@ export class GpsTestComponent implements OnInit, OnDestroy {
     this.route = L.geoJSON(geoJsonData);
     if (this.map) {
       this.route.addTo(this.map);
-  
+
       // Icono personalizado para los puntos de la ruta
       const pointIconUrl = 'https://icons.iconarchive.com/icons/icons-land/vista-map-markers/48/Map-Marker-Marker-Outside-Pink-icon.png'; // URL de la imagen PNG para el icono
       const pointIcon = L.icon({
@@ -209,7 +212,7 @@ export class GpsTestComponent implements OnInit, OnDestroy {
         iconAnchor: [12, 12], // Punto de anclaje del icono
         popupAnchor: [0, -12] // Punto de anclaje del popup
       });
-  
+
       // Añade un marcador para cada punto de la ruta
       coordinates.forEach((coordinate) => {
         if (this.map) {
@@ -217,10 +220,10 @@ export class GpsTestComponent implements OnInit, OnDestroy {
           marker.bindPopup(`Punto de ruta: [${coordinate[0]}, ${coordinate[1]}]`).openPopup();
         }
       });
-      
+
     }
   }
-  
+
   showSimpleNotification(message: string, from: string, align: string) {
     this.toastr.info(message, '', {
         timeOut: 8000,
@@ -247,15 +250,15 @@ export class GpsTestComponent implements OnInit, OnDestroy {
       this.startPointMarker = L.marker([this.startCoordinate[1], this.startCoordinate[0]]).addTo(this.map);
       this.startPointMarker.bindPopup('Punto de inicio').openPopup();
     }
-    this.isStartPointSet = true;  
-    this.isEndPointSet = false; 
+    this.isStartPointSet = true;
+    this.isEndPointSet = false;
 }
 
 
 setEndPoint(): void {
   // Play the end audio
   if (this.isEndPointSet) {
-    return;  
+    return;
   }
   const endAudio = new Audio('assets/sound/end.mp3');
   this.showSimpleNotification("Pasaste por el punto de inicio", "top", "center");
@@ -268,8 +271,8 @@ setEndPoint(): void {
     this.endPointMarker = L.marker([this.endCoordinate[1], this.endCoordinate[0]]).addTo(this.map);
     this.endPointMarker.bindPopup('Punto final').openPopup();
   }
-  this.isStartPointSet = false; 
-  this.isEndPointSet = true; 
+  this.isStartPointSet = false;
+  this.isEndPointSet = true;
 }
 
 
@@ -277,26 +280,26 @@ setEndPoint(): void {
     if (!this.speedRecords.length) {
       return 0;
     }
-  
+
     const sum = this.speedRecords.reduce((a, b) => a + b, 0);
     return sum / this.speedRecords.length;
   }
-  
+
   public getMaxSpeed(): number {
     if (!this.speedRecords.length) {
       return 0;
     }
-  
+
     return Math.max(...this.speedRecords);
   }
   get averageSpeed(): number {
     return this.getAverageSpeed();
   }
-  
+
   get maxSpeed(): number {
     return this.getMaxSpeed();
   }
-    
+
 
   reset() {
     this.timingService.reset();
@@ -309,7 +312,7 @@ setEndPoint(): void {
       this.routePolyline = null;
     }
     this.isStartPointSet = false;
-    this.isEndPointSet = false; 
+    this.isEndPointSet = false;
   }
   playPointSound(): void {
     const pointAudio = new Audio('assets/sound/point.mp3');
@@ -322,4 +325,3 @@ setEndPoint(): void {
   }
 }
 
- 

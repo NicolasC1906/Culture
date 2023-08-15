@@ -16,6 +16,15 @@ import { ToastrModule } from 'ngx-toastr';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { AuthGuard } from '../../guards/auth.guard';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgIf } from '@angular/common';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+
+
+
+
 
 
 
@@ -29,6 +38,10 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     ChartsModule,
     ReactiveFormsModule,
     NgxQRCodeModule,
+    NgbModalModule,
+    NgbCarouselModule,
+    NgbCarouselModule,
+    NgbCollapseModule,
     ToastrModule.forRoot()
   ],
   providers: [AuthGuard],
@@ -41,7 +54,7 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     TypographyComponent,
     IconsComponent,
     MapsComponent,
-    NotificationsComponent,
+    NotificationsComponent
   ]
 })
 
