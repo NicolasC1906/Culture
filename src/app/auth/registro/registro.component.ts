@@ -40,17 +40,23 @@ export class RegistroComponent implements OnInit {
 
   onSubmit() {
     if (this.registroForm.valid) {
-      const phoneNumber = this.registroForm.get('telefono').value;
-      const password = this.registroForm.get('clave').value;
+        const phoneNumber = this.registroForm.get('telefono').value;
+        const password = this.registroForm.get('clave').value;
 
-      this.registroService.registerUser(phoneNumber, password).subscribe(
-        response => {
-          console.log('Registro exitoso', response);
-        },
-        error => {
-          console.error('Error en el registro:', error);
-        }
-      );
+        this.registroService.registerUser(phoneNumber, password).subscribe(
+            response => {
+                console.log('Registro exitoso', response);
+
+                // Muestra un alerta indicando que el registro fue exitoso
+                window.alert('Registro exitoso');
+
+                // Redirige al usuario a la página de login
+                window.location.href = 'https://cultureco.app/auth/login';
+            },
+            error => {
+                console.error('Error en el registro:', error);
+            }
+        );
     }
-  }
+}
 }
