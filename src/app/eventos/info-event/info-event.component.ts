@@ -11,7 +11,7 @@ export class InfoEventComponent {
   event: any;
   private apiUrl: string = 'https://culture.apiimd.com/addUserToEvent';
   public eventId: number;
-  public isRegistered: boolean = false;
+  public isRegistered: boolean;
   private checkUrl: string = 'https://culture.apiimd.com/isUserRegistered';
   usersevent: any;
   pistasevent: any;
@@ -24,6 +24,7 @@ export class InfoEventComponent {
 
 
   ngOnInit() {
+    this.checkUserRegistration();
     this.route.params.subscribe(params => {
       const eventId = params['id']; // obtiene el 'id' de la URL
       
@@ -31,7 +32,6 @@ export class InfoEventComponent {
         this.event = data;
       });
     });
-    this.checkUserRegistration();
     this.asistentesevent();
     this.pistasevento()
 
