@@ -1,1 +1,94 @@
-<p>info-event works!</p>
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">{{event.nombre}}</h5>
+        </div>
+        <!-- Card user info -->
+        <!-- <div *ngIf="isLoading" class="loading">Cargando...</div> -->
+        <div class="card-body" [innerHTML]="event.description"></div>
+<p>
+    {{event.fecha | date}}
+</p>
+<p>Organizador: {{event.nombreDelOrganizador}}</p>
+<!-- Condición para mostrar el botón adecuado basado en el estado isRegistered -->
+<a *ngIf="!isRegistered"  class="btn btn-primary" (click)="onRegisterClick()">
+    Inscribirse <i class="fas fa-chevron-right"></i>
+</a>
+
+<a *ngIf="isRegistered"  class="btn btn-secondary">
+    Asistencia confirmada
+</a>
+        </div>
+
+        <!-- Card info car -->
+
+      </div>
+
+    
+
+
+    </div>
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="title">Asistentes al evento</h5>
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="col-md-6" *ngFor="let user of usersevent">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>{{user.username}}</h3>
+                            </div>
+                            <div class="card-body" *ngFor="let garage of user.garage">
+                                <h3>{{garage.brand}}</h3>
+                                <h4>{{garage.model}}</h4>
+                            </div>
+        
+                        </div>
+                    </div>
+
+    </div>
+
+
+
+
+
+
+    </div>
+
+    </div>
+  </div>
+
+
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="title">Pistas del evento</h5>
+        <div class="">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="col-md-4 " *ngFor="let pista of pistasevent">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>{{pista.description}}</h3>
+                        </div>
+                        <div class="card-body">
+                            <h3>Orden: {{pista.order}}</h3>
+                            <h4>Nombre de la pista: {{pista.Track.name}}</h4>
+                        </div>
+    
+                    </div>
+                </div>
+
+</div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+
