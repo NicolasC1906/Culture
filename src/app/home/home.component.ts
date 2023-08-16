@@ -104,6 +104,9 @@ private updateUserLocation(lat: number, lon: number): void {
 
     this.map.setView([lat, lon], 13);
 }
-
+scrollToMap() {
+  const mapElement = document.getElementById('map-wrapper');
+  mapElement.scrollIntoView({ behavior: 'smooth' });
+}
 
 }
