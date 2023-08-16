@@ -1,4 +1,3 @@
-<p>tracks works!</p>
 <div class="panel-header panel-header-sm">
 </div>
 <div class="main-content">
@@ -19,6 +18,54 @@
                 </div>
               </div>
             </div>
+            <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">Tabla de posiciones General</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead class=" text-primary">
+                          <th>
+                            Nombre de usuario
+                          </th>
+                          <th>
+                            Garage
+                          </th>
+                          <th>
+                            Posicion General
+                          </th>
+                          <th class="text-right">
+                            Puntos
+                          </th>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let user of posiciones ">
+                            <td>
+                                {{user.username}}
+                            </td>
+                            <td>
+                                <div *ngIf="user.garage && user.garage[0]; else noGarage">
+                                    {{user.garage[0].brand}} {{user.garage[0].model}}
+                                </div>
+                                <ng-template #noGarage>
+                                    Sin registrar
+                                </ng-template>
+                            </td>
+                            <td>
+                                {{user.posicion}}                               
+                           </td>
+                            <td class="text-right">
+                               {{user.puntos}}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
           </div>
         </div>
       </div>

@@ -55,6 +55,9 @@ export class RegistroComponent implements OnInit {
             },
             error => {
                 console.error('Error en el registro:', error);
+                
+                // Muestra un alerta con el mensaje de error
+                window.alert('Error en el registro: ' + error.error.error);
             }
         );
     }
