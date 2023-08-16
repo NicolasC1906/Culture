@@ -32,40 +32,55 @@
 
 
     </div>
-    <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="title">Asistentes al evento</h5>
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <div class="col-md-6" *ngFor="let user of usersevent">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>{{user.username}}</h3>
-                            </div>
-                            <div class="card-body" *ngFor="let garage of user.garage">
-                                <h3>{{garage.brand}}</h3>
-                                <h4>{{garage.model}}</h4>
-                            </div>
-        
-                        </div>
-                    </div>
-
-    </div>
-
-
-
-
-
-
-    </div>
-
-    </div>
-  </div>
-
+    <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Asistentes al evento</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class=" text-primary">
+                  <th>
+                    Nombre de usuario
+                  </th>
+                  <th>
+                    Garage
+                  </th>
+                  <th>
+                    Posicion General
+                  </th>
+                  <th class="text-right">
+                    Puntos
+                  </th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let user of usersevent">
+                    <td>
+                        {{user.username}}
+                    </td>
+                    <td>
+                        {{user.garage[0].brand}}
+                        {{user.garage[0].model}}
+                    </td>
+                    <td>
+                        {{user.posicion}}
+                    </td>
+                    <td class="text-right">
+                        {{user.puntos}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
 
   <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h5 class="title">Pistas del evento</h5>
+        <h4>{{errorMessage}}</h4>
         <div class="">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -78,7 +93,9 @@
                             <h3>Orden: {{pista.order}}</h3>
                             <h4>Nombre de la pista: {{pista.Track.name}}</h4>
                         </div>
-    
+                        <a class="btn btn-primary">
+                            {{ buttonText }} <i class="fas fa-chevron-right"></i>
+                          </a>
                     </div>
                 </div>
 

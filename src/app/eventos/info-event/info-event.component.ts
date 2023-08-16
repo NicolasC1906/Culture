@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { DatePipe } from '@angular/common';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-info-event',
@@ -15,8 +17,13 @@ export class InfoEventComponent {
   private checkUrl: string = 'https://culture.apiimd.com/isUserRegistered';
   usersevent: any;
   pistasevent: any;
+  public buttonText: string = 'Practicar pista';
+  errorMessage: string;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  constructor(
+    private http: HttpClient, 
+    private route: ActivatedRoute,
+    private datePipe: DatePipe) {
     this.route.params.subscribe(params => {
       this.eventId = +params['id']; // El '+' convierte el string a número.
     });
@@ -30,6 +37,7 @@ export class InfoEventComponent {
       
       this.http.get<Event[]>(`https://culture.apiimd.com/event/${eventId}`).subscribe(data => {
         this.event = data;
+        this.comparaciondefecha();
       });
     });
     this.asistentesevent();
@@ -71,18 +79,51 @@ export class InfoEventComponent {
       alert('Sesion expirada intenta iniciar sesion de nuevo');
     }
   }
+  obteniendoinfo(): void {
+    this.usersevent.forEach(user => {
 
+      this.http.get<Event[]>(`https://culture.apiimd.com/posicionUsuario/${user.id}`).subscribe((posicionData:any) => {
+        console.log(posicionData)
+        user.posicion = posicionData.position;  // Adapta esta línea según la respuesta de la API
+
+        this.http.get<Event[]>(`https://culture.apiimd.com/puntosUsuario/${user.id}`).subscribe((puntosData:any) => {
+        console.log(puntosData)  
+        user.puntos = puntosData.puntos; // Adapta esta línea según la respuesta de la API
+        });
+      });
+    });
+  }
   asistentesevent(): void {
     this.http.get<Event[]>(`https://culture.apiimd.com/getUsersOfEvent/${this.eventId}`).subscribe((data:any) => {
         this.usersevent = data.users;
-        console.log(this.usersevent)
+        this.obteniendoinfo()
       });
   }
   pistasevento(): void {
-    this.http.get<Event[]>(`https://culture.apiimd.com/clues/event/${this.eventId}`).subscribe((data:any) => {
+    this.http.get<Event[]>(`https://culture.apiimd.com/clues/event/${this.eventId}`)
+      .pipe(
+        catchError((error: any) => {
+          if (error.status === 404) {
+            this.errorMessage = 'No hay pistas registradas para este evento';
+          } else {
+            this.errorMessage = 'Ocurrió un error al cargar las pistas'; // Puedes adaptar este mensaje para otros errores si lo deseas
+          }
+          return error;
+        })
+      )
+      .subscribe((data: any) => {
+        this.errorMessage = "Te mostramos el orden de las pistas segun el evento"
         this.pistasevent = data;
-        console.log(this.pistasevent)
+        console.log(this.pistasevent);
       });
+  }
+  comparaciondefecha(): void {
+    const currentDate = new Date();
+    const eventDate = new Date(this.event.fecha);
+
+    if (this.datePipe.transform(currentDate, 'yyyy-MM-dd') === this.datePipe.transform(eventDate, 'yyyy-MM-dd')) {
+      this.buttonText = 'Correr pista';
+    }
   }
 }
 
