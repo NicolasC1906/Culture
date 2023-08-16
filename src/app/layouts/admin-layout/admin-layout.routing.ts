@@ -15,6 +15,7 @@ import { HomeComponent } from '../../home/home.component';
 import { EventsComponent } from '../../eventos/events/events.component';
 import { InfoEventComponent } from '../../eventos/info-event/info-event.component';
 import { TracksComponent } from '../../pistas/tracks/tracks.component';
+import { TrackDetailComponent } from '../../pistas/track-detail/track-detail.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'home',      component: HomeComponent },
@@ -31,5 +32,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'event',        component: EventsComponent, canActivate: [AuthGuard] },
     { path: 'event-detail/:id', component: InfoEventComponent, canActivate: [AuthGuard] },
     { path: 'tracks',        component: TracksComponent, canActivate: [AuthGuard] },
+    { path: 'track-detail/:id', component: TrackDetailComponent, canActivate: [AuthGuard] },
 
 ];

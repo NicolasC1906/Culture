@@ -1,0 +1,27 @@
+.map{
+    width: 100%; 
+    height: 80vh; 
+    background-color: #b3e0ff;
+
+
+    @media screen and (max-width: 760px) {
+        width: 100%; 
+        height: 100vh; 
+        background-color: #b3e0ff;
+    }
+}
+.custom-content p {
+    margin: 10px;  /* Ajusta como necesites */
+    font-family: 'Arial', sans-serif; /* Cambia a la fuente deseada */
+}
+
+.custom-content h1, .custom-content h2, .custom-content h3 {
+    font-family: 'Arial', sans-serif;
+}
+.leaflet-tooltip {
+    background-color: white;
+    border: 1px solid #f03;
+    box-shadow: 0 0 1px #f03;
+    color: #f03;
+    font-weight: bold;
+  }

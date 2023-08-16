@@ -9,17 +9,38 @@
         </div>
         <!-- Card user info -->
         <!-- <div *ngIf="isLoading" class="loading">Cargando...</div> -->
-        <div class="card-body" [innerHTML]="event.description"></div>
+        <div class="card-body" >
+            <!-- Sección de Mapa con Efecto Parallax -->
+        <div id="map-wrapper">
+            <!-- Contenido que se superpondrá sobre el mapa -->
+            <div class="overlay-content">
+            <div class="row">
+                <div class="col-lg-4">
+                <div class="content-box" style="background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 10px; margin-left: 40px;">
+                    <p>Conoce el punto de encuentro:</p>
+                </div>
+                </div>
+            </div>
+            </div>
+            
+        
+            <!-- Mapa (Por simplicidad, lo representaré con un color de fondo) -->
+            <div id="map" class="map"></div>
+
+          
+        </div>
+        </div>
 <p>
     {{event.fecha | date}}
 </p>
 <p>Organizador: {{event.nombreDelOrganizador}}</p>
+<p class="custom-content" [innerHTML]="event.description"></p>
 <!-- Condición para mostrar el botón adecuado basado en el estado isRegistered -->
 <a *ngIf="!isRegistered"  class="btn btn-primary" (click)="onRegisterClick()">
     Inscribirse <i class="fas fa-chevron-right"></i>
 </a>
 
-<a *ngIf="isRegistered"  class="btn btn-secondary">
+<a *ngIf="isRegistered"  class="btn btn-secondary justify-content-between">
     Asistencia confirmada
 </a>
         </div>
