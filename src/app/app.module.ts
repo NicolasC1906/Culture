@@ -24,6 +24,7 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { AddCarsComponent } from './Modals/add-cars/add-cars.component';
 import { InfoEventComponent } from './eventos/info-event/info-event.component';
 import { EventsComponent } from './eventos/events/events.component';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -55,7 +56,7 @@ import { EventsComponent } from './eventos/events/events.component';
     EventsComponent
 
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
