@@ -129,10 +129,7 @@ ngOnInit(): void {
     attribution: '&copy; Drivy',
     subdomains: 'abcd',
     maxZoom: 19,
-    zoomSnap: 0.25,
-    zoomDelta: 0.25,
     minZoom: 3.25,
-    zoomControl: true
 
   }).addTo(this.map);
    // Utiliza el complemento para trazar la ruta
@@ -143,7 +140,6 @@ ngOnInit(): void {
       ],
       routeWhileDragging: true,
       show: false ,
-      language: 'es'
   }).addTo(this.map);
 
     // Configura la ruta  aquí (si se desea)
