@@ -25,6 +25,9 @@ import { AddCarsComponent } from './Modals/add-cars/add-cars.component';
 import { InfoEventComponent } from './eventos/info-event/info-event.component';
 import { EventsComponent } from './eventos/events/events.component';
 import { DatePipe } from '@angular/common';
+import { TracksComponent } from './pistas/tracks/tracks.component';
+import { TrackDetailComponent } from './pistas/track-detail/track-detail.component';
+import { TrackResumeComponent } from './pistas/track-resume/track-resume.component';
 
 
 
@@ -53,7 +56,10 @@ import { DatePipe } from '@angular/common';
     HomeComponent,
     AddCarsComponent,
     InfoEventComponent,
-    EventsComponent
+    EventsComponent,
+    TracksComponent,
+    TrackDetailComponent,
+    TrackResumeComponent,
 
   ],
   providers: [DatePipe],
