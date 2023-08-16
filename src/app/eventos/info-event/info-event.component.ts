@@ -207,7 +207,7 @@ export class InfoEventComponent {
       offset: L.point(10, 0) // Desplaza la tooltip respecto al marcador para que se ajuste como desees
     });  
     // Establecer el punto de vista del mapa al punto de inicio con un zoom específico
-    this.map.setView(pointA, 17); // 15 es solo un valor de zoom de ejemplo, puedes ajustarlo según tus necesidades
+    this.map.setView(pointA, 15); // 15 es solo un valor de zoom de ejemplo, puedes ajustarlo según tus necesidades
   
     // Efecto de radar
     this.userRadar = L.circle([0, 0], {
@@ -229,6 +229,25 @@ export class InfoEventComponent {
       if (currentRadius > 1000) isGrowing = false;
       if (currentRadius < 500) isGrowing = true;
     }, 50);
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+
+          // Agregar un marcador en la ubicación actual
+          L.marker([latitude, longitude], { icon: icon }).addTo(this.map);
+
+          // Si deseas centrar el mapa en la ubicación actual, puedes usar:
+          // this.map.setView([latitude, longitude], 15);
+      }, (error) => {
+          console.error('Error obteniendo la ubicación', error);
+          // Aquí puedes manejar errores, por ejemplo, mostrar un mensaje al usuario si no permite el acceso a su ubicación
+      });
+  } else {
+      console.log('Geolocation no es soportado por este navegador.');
+      // Puedes mostrar un mensaje al usuario si su navegador no soporta geolocalización
+  }
   }
   
 }

@@ -1,9 +1,9 @@
 <div class="panel-header panel-header-sm">
 </div>
 <div class="main-content">
-  <div class="row">
+  <div class="row justify-content-center">
     <div class="col-md-8">
-      <div class="card">
+      <div class="card p-3">
         <div class="card-header">
           <h5 class="title">{{event.nombre}}</h5>
         </div>
@@ -36,11 +36,11 @@
 <p>Organizador: {{event.nombreDelOrganizador}}</p>
 <p class="custom-content" [innerHTML]="event.description"></p>
 <!-- Condición para mostrar el botón adecuado basado en el estado isRegistered -->
-<a *ngIf="!isRegistered"  class="btn btn-primary" (click)="onRegisterClick()">
+<a *ngIf="!isRegistered"  class="btn btn-primary btn-lg w-100" (click)="onRegisterClick()">
     Inscribirse <i class="fas fa-chevron-right"></i>
 </a>
 
-<a *ngIf="isRegistered"  class="btn btn-secondary justify-content-between">
+<a *ngIf="isRegistered"  class="btn btn-secondary btn-lg w-100">
     Asistencia confirmada
 </a>
         </div>
@@ -53,78 +53,83 @@
 
 
     </div>
-    <div class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <h4 class="card-title">Asistentes al evento</h4>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table">
-                <thead class=" text-primary">
-                  <th>
-                    Nombre de usuario
-                  </th>
-                  <th>
-                    Garage
-                  </th>
-                  <th>
-                    Posicion General
-                  </th>
-                  <th class="text-right">
-                    Puntos
-                  </th>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let user of usersevent">
-                    <td>
-                        {{user.username}}
-                    </td>
-                    <td>
-                        {{user.garage[0].brand}}
-                        {{user.garage[0].model}}
-                    </td>
-                    <td>
-                        {{user.posicion}}
-                    </td>
-                    <td class="text-right">
-                        {{user.puntos}}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+    <div class="row justify-content-center">
+        <div class="col-md-8 mt-4">
+            <div class="card p-3">
+            <div class="card-header">
+                <h4 class="card-title">Asistentes al evento</h4>
             </div>
-          </div>
-        </div>
-      </div>
-
-  <div class="card">
-    <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="title">Pistas del evento</h5>
-        <h4>{{errorMessage}}</h4>
-        <div class="">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <div class="col-md-4 " *ngFor="let pista of pistasevent">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>{{pista.description}}</h3>
-                        </div>
-                        <div class="card-body">
-                            <h3>Orden: {{pista.order}}</h3>
-                            <h4>Nombre de la pista: {{pista.Track.name}}</h4>
-                        </div>
-                        <a class="btn btn-primary">
-                            {{ buttonText }} <i class="fas fa-chevron-right"></i>
-                          </a>
-                    </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                <table class="table">
+                    <thead class=" text-primary">
+                    <th>
+                        Nombre de usuario
+                    </th>
+                    <th>
+                        Garage
+                    </th>
+                    <th>
+                        Posicion General
+                    </th>
+                    <th class="text-right">
+                        Puntos
+                    </th>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let user of usersevent">
+                        <td>
+                            {{user.username}}
+                        </td>
+                        <td>
+                            {{user.garage[0].brand}}
+                            {{user.garage[0].model}}
+                        </td>
+                        <td>
+                            {{user.posicion}}
+                        </td>
+                        <td class="text-right">
+                            {{user.puntos}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
                 </div>
-
-</div>
+            </div>
+            </div>
         </div>
     </div>
-</div>
-</div>
+    <div class="row justify-content-center">
+        <div class="col-md-8 mt-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="title">Pistas del evento</h5>
+                    <h4>{{errorMessage}}</h4>
+                    <div class="">
+                    <div class="card p-3">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <div class="col-md-4 " *ngFor="let pista of pistasevent">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3>{{pista.description}}</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <h3>Orden: {{pista.order}}</h3>
+                                        <h4>Nombre de la pista: {{pista.Track.name}}</h4>
+                                    </div>
+                                    <a class="btn btn-primary">
+                                        {{ buttonText }} <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+            </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
 
 
 

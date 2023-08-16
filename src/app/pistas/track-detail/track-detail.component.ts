@@ -66,8 +66,8 @@ obtenerinfo(){
   private initMap(): void {
     this.map = L.map('map', {
       zoomControl: false,
-      dragging: false,           // Desactiva arrastrar el mapa
-      touchZoom: false,          // Desactiva zoom con gestos táctiles
+      dragging: true,           // Desactiva arrastrar el mapa
+      touchZoom: true,          // Desactiva zoom con gestos táctiles
       scrollWheelZoom: false,    // Desactiva zoom con rueda del ratón
       doubleClickZoom: false,    // Desactiva zoom con doble clic
       boxZoom: false,            // Desactiva zoom con cuadro
