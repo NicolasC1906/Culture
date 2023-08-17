@@ -9,6 +9,10 @@ import { LocationService } from '../../services/location.service';
   styleUrls: ['./section_1.css', './home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
+
+  isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  deferredPrompt: any;
+
   private map: L.Map;
   private userMarker: L.Marker;
   private userRadar: L.Circle;
@@ -25,12 +29,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.initMap();
-    this.locationService.watchLocation((speed, timestamp, latitude, longitude) => {
-      this.updateUserLocation(latitude, longitude);
-    }, (error) => {
-      console.error(error);
+    this.initMap(this.getRandomLocationInBogota());  // Cambio aquí
+     // Escuchar el evento beforeinstallprompt
+     window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      this.deferredPrompt = e;
     });
+
   }
 
   ngOnDestroy() {
@@ -40,8 +45,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
+  private getRandomLocationInBogota(): L.LatLng {
+    // Estos son aproximados. Ajusta según lo preciso que quieras ser.
+    const latMin = 4.4832, latMax = 4.8127, lonMin = -74.2166, lonMax = -74.0467;
 
-  private initMap(): void {
+    const lat = Math.random() * (latMax - latMin) + latMin;
+    const lon = Math.random() * (lonMax - lonMin) + lonMin;
+
+    return L.latLng(lat, lon);
+}
+
+
+private initMap(initialLocation: L.LatLng): void {
     this.map = L.map('map', {
       zoomControl: false,
       dragging: false,           // Desactiva arrastrar el mapa
@@ -50,7 +65,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       doubleClickZoom: false,    // Desactiva zoom con doble clic
       boxZoom: false,            // Desactiva zoom con cuadro
       keyboard: false            // Desactiva controles con teclado
-    }).setView([0, 0], 13);
+    }).setView([initialLocation.lat, initialLocation.lng], 13);
 
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
@@ -67,10 +82,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       iconSize: [32, 32], // puedes necesitar ajustar esto dependiendo del tamaño del ícono
       iconAnchor: [16, 16] // y esto también
     });
-    this.userMarker = L.marker([0, 0], { icon: icon }).addTo(this.map);
+    this.userMarker = L.marker([initialLocation.lat, initialLocation.lng], { icon: icon }).addTo(this.map);
 
     // Efecto de radar
-    this.userRadar = L.circle([0, 0], {
+    this.userRadar = L.circle([initialLocation.lat, initialLocation.lng], {
       color: '#ff3636',
       fillColor: '#ff3636',
       fillOpacity: 0.5,
@@ -104,9 +119,37 @@ private updateUserLocation(lat: number, lon: number): void {
 
     this.map.setView([lat, lon], 13);
 }
-scrollToMap() {
-  const mapElement = document.getElementById('map-wrapper');
-  mapElement.scrollIntoView({ behavior: 'smooth' });
-}
+public showAlert = false;
+
+      // Método ligado al botón "Probar"
+      scrollToMap() {
+        this.showAlert = true;  // Mostrar el alerta
+        const mapElement = document.getElementById('map-wrapper');
+        mapElement.scrollIntoView({ behavior: 'smooth' });
+
+        // Luego de mostrar la notificación, intenta obtener la ubicación del usuario
+        this.locationService.watchLocation((speed, timestamp, latitude, longitude) => {
+          this.updateUserLocation(latitude, longitude);
+          this.showAlert = false;  // Ocultar el alerta una vez obtenida la ubicación
+        }, (error) => {
+          console.error(error);
+        });
+      }
+
+      promptInstall() {
+        if (this.deferredPrompt) {
+          this.deferredPrompt.prompt();
+
+          this.deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('El usuario aceptó la instalación');
+            } else {
+              console.log('El usuario rechazó la instalación');
+            }
+            this.deferredPrompt = null;
+          });
+        }
+      }
+
 
 }

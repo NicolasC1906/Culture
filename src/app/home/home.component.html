@@ -19,15 +19,19 @@ padding-top: 19px;">
         <div class="info margin-left">
           <h1>Precisión, vuelta tras vuelta.</h1>
           <p>En culture utilizamos su posición GPS para calcular los tiempos de vuelta con la mayor precisión.</p>
-          <button (click)="scrollToMap()">Probar</button>
-          <span style="margin-left: 10px;">⮕ Es completamente gratis</span>
+          <div *ngIf="isMobile">
+            <button (click)="promptInstall()">Agregar al inicio</button>
+          </div>
+          <button (click)="scrollToMap()">Prueba Gratis nuestro servicio</button>
 
         </div>
         <div class="image">
           <img src="./assets/img/pin_home.png">
         </div>
       </div>
+
     </div>
+
   </div>
   <!-- End Landing Page -->
 </div>
@@ -43,14 +47,19 @@ padding-top: 19px;">
     <div class="row">
       <div class="col-lg-4">
         <div class="content-box" style="background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 10px; margin-left: 40px;">
-            <h2>Destacados del Mapa</h2>
-            <p>Descubre interesantes lugares en este mapa interactivo.</p>
+          <div class="alert alert-warning alert-dismissible fade show" *ngIf="showAlert" role="alert">
+            <strong>Hola soy Culture!</strong> estoy accediendo a su ubicación.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Mapa (Por simplicidad, lo representaré con un color de fondo) -->
+
   <div id="map" style="width: 100%; height: 100vh; background-color: #b3e0ff;"></div>
 </div>
 
