@@ -11,6 +11,9 @@ import { LocationService } from '../../services/location.service';
 export class HomeComponent implements OnInit, OnDestroy {
 
   isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+  isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
   deferredPrompt: any;
 
   private map: L.Map;
@@ -136,20 +139,29 @@ public showAlert = false;
         });
       }
 
-      promptInstall() {
-        if (this.deferredPrompt) {
-          this.deferredPrompt.prompt();
-
-          this.deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-              console.log('El usuario aceptó la instalación');
-            } else {
-              console.log('El usuario rechazó la instalación');
-            }
-            this.deferredPrompt = null;
-          });
+      showiOSInstallGuide() {
+        if (this.isIOS && this.isSafari) {
+          // Mostrar la guía de instalación para iOS aquí
         }
       }
+
+      promptInstall() {
+  if (this.deferredPrompt) {
+    this.deferredPrompt.prompt();
+
+    this.deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('El usuario aceptó la instalación');
+      } else {
+        console.log('El usuario rechazó la instalación');
+      }
+      this.deferredPrompt = null;
+    });
+  } else if (this.isIOS && this.isSafari) {
+    this.showiOSInstallGuide();
+  }
+}
+
 
 
 }

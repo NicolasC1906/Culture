@@ -20,7 +20,7 @@ padding-top: 19px;">
           <h1>Precisión, vuelta tras vuelta.</h1>
           <p>En culture utilizamos su posición GPS para calcular los tiempos de vuelta con la mayor precisión.</p>
           <div *ngIf="isMobile">
-            <button (click)="promptInstall()">Agregar al inicio</button>
+            <button (click)="promptInstall()">Instalar Aplicación</button>
           </div>
           <button (click)="scrollToMap()">Prueba Gratis nuestro servicio</button>
 
@@ -31,7 +31,12 @@ padding-top: 19px;">
       </div>
 
     </div>
-
+    <div class="alert alert-warning alert-dismissible fade show" *ngIf="showAlert" role="alert">
+      <strong>Hola soy Culture!</strong> estoy accediendo a su ubicación.
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
   </div>
   <!-- End Landing Page -->
 </div>
@@ -46,13 +51,8 @@ padding-top: 19px;">
   <div class="overlay-content">
     <div class="row">
       <div class="col-lg-4">
-        <div class="content-box" style="background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 10px; margin-left: 40px;">
-          <div class="alert alert-warning alert-dismissible fade show" *ngIf="showAlert" role="alert">
-            <strong>Hola soy Culture!</strong> estoy accediendo a su ubicación.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
+        <div class="content-box" >
+
         </div>
       </div>
     </div>
