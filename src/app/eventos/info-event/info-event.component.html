@@ -82,8 +82,8 @@
                             {{user.username}}
                         </td>
                         <td>
-                            {{user.garage[0].brand}}
-                            {{user.garage[0].model}}
+                            {{user.garage?.[0]?.brand || 'Sin registrar'}} 
+                            {{user.garage?.[0]?.model}}
                         </td>
                         <td>
                             {{user.posicion}}
