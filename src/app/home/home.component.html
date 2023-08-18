@@ -19,10 +19,23 @@ padding-top: 19px;">
         <div class="info margin-left">
           <h1>Precisión, vuelta tras vuelta.</h1>
           <p>En culture utilizamos su posición GPS para calcular los tiempos de vuelta con la mayor precisión.</p>
+          <!-- Botón de instalación -->
           <div *ngIf="isMobile">
-            <button (click)="promptInstall()">Instalar Aplicación</button>
-          </div>
-          <button (click)="scrollToMap()">Prueba Gratis nuestro servicio</button>
+            <button [class.button-ios]="isIOS"
+                    [class.button-android]="!isIOS && isMobile"
+                    (click)="promptInstall(); showiOSInstallGuide()">
+                    <i *ngIf="isIOS" class="fab fa-apple">    </i>
+                    <i *ngIf="!isIOS && isMobile" class="fab fa-android"></i>
+                    Instalar Aplicación {{ isIOS ? 'iOS' : 'Android' }}
+            </button>
+        </div>
+
+
+          <!-- Botón de prueba -->
+          <button class="button-test" (click)="scrollToMap()">
+            Prueba Gratis nuestro servicio
+          </button>
+
 
         </div>
         <div class="image">
@@ -31,12 +44,27 @@ padding-top: 19px;">
       </div>
 
     </div>
-    <div class="alert alert-warning alert-dismissible fade show" *ngIf="showAlert" role="alert">
-      <strong>Hola soy Culture!</strong> estoy accediendo a su ubicación.
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
+
+        <div id="ios-install-guide" style="display: none;">
+          <h2>Instala esta aplicación desde navegador Safari</h2>
+          <ol>
+            <li>
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ltXg1V3vKCQeC-XF-7-3EzRJreYP-k_kEPwaHlFVIpRzUTHeCq0WbTi4TeBq1bmg110&usqp=CAU" alt="Paso 1">
+              <p>Toca el botón de compartir: el rectángulo con la flecha hacia arriba en la parte inferior de la pantalla. </p>
+            </li>
+            <li>
+              <img src="https://elblogdealfocea.files.wordpress.com/2019/09/223ae-agregar-icono-a-la-pantalla-de-inicio-iphone-.png" alt="Paso 2">
+              <p>Desplázate hacia abajo y selecciona "Agregar a la pantalla de inicio".</p>
+            </li>
+            <li>
+              <img src="https://help.apple.com/assets/640A52196275DE31D4371B5E/640A52226275DE31D4371B8B/es_419/b3ba6d81c99ba11b643b884203dad6a1.png" alt="Paso 3">
+              <p>Confirma la acción y verás el ícono de la app en tu pantalla de inicio.</p>
+            </li>
+          </ol>
+          <button (click)="closeGuide()">Cerrar guía</button>
+        </div>
+
+
   </div>
   <!-- End Landing Page -->
 </div>

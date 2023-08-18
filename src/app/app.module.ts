@@ -29,7 +29,7 @@ import { TracksComponent } from './pistas/tracks/tracks.component';
 import { TrackDetailComponent } from './pistas/track-detail/track-detail.component';
 import { TrackResumeComponent } from './pistas/track-resume/track-resume.component';
 
-
+import { BrowserModule } from '@angular/platform-browser';
 
 
 

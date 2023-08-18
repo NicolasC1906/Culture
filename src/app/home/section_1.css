@@ -156,7 +156,62 @@ ul {
   color: #FFF;
   background-color: #ff3636;
 }
-.landing-page .content .image img {
-  max-width: 70%;
+/* Asegurando que la imagen esté centrada en la vista celular */
+@media (max-width: 767px) {
+  .landing-page .content .image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .landing-page .content .image img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .landing-page .content .info button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
-/* End Landing Page */
+
+/* Añadiendo iconos a los botones según su función,
+/* Añadiendo iconos a los botones según su función */
+.landing-page .content .info button:before {
+  margin-right: 10px;
+  display: inline-block; /* Asegura que el ícono se ajuste adecuadamente junto al texto del botón */
+}
+
+/* Ícono para el botón "Instalar Aplicación" */
+button[click*="promptInstall"]:before, button[click*="showiOSInstallGuide"]:before {
+  content: '\2193'; /* Representa una flecha hacia abajo, como símbolo de descarga */
+}
+
+/* Ícono para el botón "Prueba Gratis nuestro servicio" */
+button[click*="scrollToMap"]:before {
+  content: '\25B6'; /* Representa una flecha de play */
+}
+
+/* Centrar el contenido de .info en vistas móviles */
+@media (max-width: 767px) {
+  .landing-page .content .info {
+    text-align: center;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Alinear verticalmente al centro */
+    align-items: center; /* Alinear horizontalmente al centro */
+    gap: 10px; /* Espacio entre los elementos */
+    height: 50%; /* Ocupa la mitad de la altura disponible */
+  }
+
+  /* Si deseas que los botones ocupen el ancho completo en vistas móviles, puedes agregar esto */
+  .landing-page .content .info button {
+    width: 100%;
+    max-width: 300px; /* Un ancho máximo por estética */
+    margin-top: 20px;
+  }
+}
+
+

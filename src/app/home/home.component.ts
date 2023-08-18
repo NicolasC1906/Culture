@@ -1,6 +1,9 @@
-import { Component, OnInit, OnDestroy, HostListener, ElementRef  } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ElementRef, Renderer2  } from '@angular/core';
 import * as L from 'leaflet';
 import { LocationService } from '../../services/location.service';
+import { ToastrService } from 'ngx-toastr';
+declare var gtag: any;  // <-- Aquí está la declaración
+
 
 
 @Component({
@@ -16,11 +19,19 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   deferredPrompt: any;
 
+
+
   private map: L.Map;
   private userMarker: L.Marker;
   private userRadar: L.Circle;
 
-  constructor(private locationService: LocationService,private el: ElementRef) {}
+  constructor(
+    private locationService: LocationService,
+    private el: ElementRef,
+    private renderer: Renderer2,
+    private toastr: ToastrService
+    ) {}
+
 
   @HostListener('window:scroll', ['$event'])
   onScroll(event) {
@@ -38,6 +49,20 @@ export class HomeComponent implements OnInit, OnDestroy {
       e.preventDefault();
       this.deferredPrompt = e;
     });
+    // Escucha el evento de clic del botón y envía el evento a Google Analytics
+    const buttonElement = this.el.nativeElement.querySelector('.my-special-button');
+        if (buttonElement) {
+            this.renderer.listen(buttonElement, 'click', (event) => {
+              console.log('Intentando enviar evento button_click a Google Analytics...');  // <-- Antes de enviar
+              gtag('event', 'button_click', {
+                'event_category': 'user_interaction',
+                'event_label': 'my_special_button',
+                'value': '1'
+              });
+              console.log('Evento button_click enviado a Google Analytics.');  // <-- Después de enviar
+            });
+        }
+
 
   }
 
@@ -122,45 +147,115 @@ private updateUserLocation(lat: number, lon: number): void {
 
     this.map.setView([lat, lon], 13);
 }
-public showAlert = false;
+
+showSimpleNotification(message: string, from: string, align: string) {
+  this.toastr.info(message, '', {
+      timeOut: 8000,
+      closeButton: true,
+      enableHtml: true,
+      toastClass: "alert alert-info",
+      positionClass: 'toast-' + from + '-' + align
+  });
+}
 
       // Método ligado al botón "Probar"
       scrollToMap() {
-        this.showAlert = true;  // Mostrar el alerta
+        // Mostrar el alerta
+        const endAudio = new Audio('assets/sound/end.mp3');
+        this.showSimpleNotification("Por defecto, la aplicación muestra lugares aleatorios. Al probar nuestro servicio gratuito, detectaremos tu ubicación en tiempo real.", "top", "center");
+        this.showSimpleNotification("¡Hola soy Culture! Estoy accediendo a su ubicación.", "bottom", "center");
+        endAudio.play();
+        // Intentar hacer vibrar el dispositivo
+          if (navigator.vibrate) {
+            navigator.vibrate([200, 100, 200]);  // Vibra 200ms, pausa 100ms, vibra 200ms
+
+          }
+
         const mapElement = document.getElementById('map-wrapper');
         mapElement.scrollIntoView({ behavior: 'smooth' });
 
         // Luego de mostrar la notificación, intenta obtener la ubicación del usuario
         this.locationService.watchLocation((speed, timestamp, latitude, longitude) => {
           this.updateUserLocation(latitude, longitude);
-          this.showAlert = false;  // Ocultar el alerta una vez obtenida la ubicación
         }, (error) => {
           console.error(error);
         });
-      }
 
-      showiOSInstallGuide() {
-        if (this.isIOS && this.isSafari) {
-          // Mostrar la guía de instalación para iOS aquí
+        // Escucha el evento de clic del botón y envía el evento a Google Analytics
+            const buttonElement = this.el.nativeElement.querySelector('.my-special-button');
+            if (buttonElement) {
+              this.renderer.listen(buttonElement, 'click', (event) => {
+                console.log('Intentando enviar evento button_click a Google Analytics...');  // <-- Antes de enviar
+              gtag('event', 'button_click', {
+                'event_category': 'user_interaction',
+                'event_label': 'my_special_button',
+                'value': '1'
+              });
+              console.log('Evento button_click enviado a Google Analytics.');
+              });
+  }
+    }
+
+
+    showiOSInstallGuide() {
+      const guideElement = document.getElementById('ios-install-guide');
+      if (guideElement) {
+        guideElement.style.display = 'block';
+      }
+    }
+
+
+
+    closeGuide() {
+      const guideElement = document.getElementById('ios-install-guide');
+      if (guideElement) {
+        guideElement.style.display = 'none';
+      }
+    }
+
+    onInstallClick() {
+      this.promptInstall();
+      if (this.isIOS && this.isSafari) {
+        this.showiOSInstallGuide();
+      }
+    }
+
+      promptInstall() {
+        if (this.deferredPrompt) {
+          this.deferredPrompt.prompt();
+
+          this.deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('El usuario aceptó la instalación');
+
+              // Enviar evento a Google Analytics indicando que el usuario aceptó la instalación
+              gtag('event', 'install_prompt', {
+                'event_category': 'user_interaction',
+                'event_label': 'accepted',
+                'value': '1'
+              });
+              console.log('Evento install_prompt accepted enviado a Google Analytics.');  // <-- Después de enviar
+
+            } else {
+              console.log('El usuario rechazó la instalación');
+
+              // Enviar evento a Google Analytics indicando que el usuario rechazó la instalación
+              console.log('Intentando enviar evento install_prompt rejected a Google Analytics...');  // <-- Antes de enviar
+              gtag('event', 'install_prompt', {
+                'event_category': 'user_interaction',
+                'event_label': 'rejected',
+                'value': '0'
+              });
+              console.log('Evento install_prompt rejected enviado a Google Analytics.');  // <-- Después de enviar
+
+            }
+            this.deferredPrompt = null;
+          });
+        } else if (this.isIOS && this.isSafari) {
+          this.showiOSInstallGuide();
         }
       }
 
-      promptInstall() {
-  if (this.deferredPrompt) {
-    this.deferredPrompt.prompt();
-
-    this.deferredPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('El usuario aceptó la instalación');
-      } else {
-        console.log('El usuario rechazó la instalación');
-      }
-      this.deferredPrompt = null;
-    });
-  } else if (this.isIOS && this.isSafari) {
-    this.showiOSInstallGuide();
-  }
-}
 
 
 
