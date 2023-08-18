@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from './../environments/environment';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+
 
 
 interface UserProfileResponse {
@@ -28,6 +31,8 @@ export interface Vehicle {
   providedIn: 'root'
 })
 export class RegistroService {
+
+
 
   constructor(private http: HttpClient,  private router: Router) { }
 
@@ -71,6 +76,18 @@ export class RegistroService {
   DeleteCarGaraje(data: any, id: number) {
     return this.http.delete(`${environment.apiBaseUrl}/eliminarvehiculo/${id}`, data);
   }
+  getBlackList(): Observable<any[]> {
+    return this.http.get<any[]>(`https://culture.apiimd.com/tablaDePosiciones`)
+        .pipe(
+            catchError(error => {
+                console.error('Error al obtener la tabla de posiciones:', error);
+                return throwError(error);
+            })
+        );
+}
+
+
+
 
   logout() {
     localStorage.removeItem('token');

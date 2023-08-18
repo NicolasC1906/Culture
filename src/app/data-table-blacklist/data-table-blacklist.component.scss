@@ -1,0 +1,46 @@
+/* styles.css o styles.scss */
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/material.css'; /* u otro tema si prefieres */
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+
+
+
+/* Hace que el contenedor de la tabla sea flexible */
+.material {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Estilos para las medallas */
+.medal-gold {
+  color: gold;
+}
+
+.medal-silver {
+  color: silver;
+}
+
+.medal-bronze {
+  color: #cd7f32;
+}
+
+
+.loader {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
+
+

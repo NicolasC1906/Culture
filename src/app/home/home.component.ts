@@ -1,49 +1,60 @@
-import { Component, OnInit, OnDestroy, HostListener, ElementRef, Renderer2  } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ElementRef, Renderer2, AfterViewInit  } from '@angular/core';
 import * as L from 'leaflet';
 import { LocationService } from '../../services/location.service';
 import { ToastrService } from 'ngx-toastr';
+import { RegistroService } from '../../services/registro.service';
+
 declare var gtag: any;  // <-- Aquí está la declaración
+
 
 
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./section_1.css', './home.component.scss']
+  styleUrls: ['./section_1.css','./section_2.css', './home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
+
+  posiciones: Event[];
+  public selectedUser: any;
 
   isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
   isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
   deferredPrompt: any;
+  tokenExists: boolean = false;
 
 
 
   private map: L.Map;
   private userMarker: L.Marker;
   private userRadar: L.Circle;
+  userData: any;
 
   constructor(
     private locationService: LocationService,
     private el: ElementRef,
     private renderer: Renderer2,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private registroService: RegistroService
     ) {}
 
 
-  @HostListener('window:scroll', ['$event'])
-  onScroll(event) {
-    const overlayContent = this.el.nativeElement.querySelector('.overlay-content');
-    const scrollY = window.scrollY;
+    @HostListener('window:scroll', ['$event'])
+    onScroll(event) {
+      const overlayContent = this.el.nativeElement.querySelector('.overlay-content');
+      const scrollY = window.scrollY;
+      if (overlayContent) {
+        overlayContent.style.transform = `translateY(${scrollY * 0.5}px)`;
+      }
+    }
 
-    overlayContent.style.transform = `translateY(${scrollY * 0.5}px)`; // Puedes ajustar el 0.5 para cambiar la velocidad del efecto
-  }
 
 
   ngOnInit() {
-    this.initMap(this.getRandomLocationInBogota());  // Cambio aquí
+    this.tokenExists = !!localStorage.getItem('token');
      // Escuchar el evento beforeinstallprompt
      window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
@@ -65,6 +76,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
   }
+
+  ngAfterViewInit() {
+    this.initMap(this.getRandomLocationInBogota());
+}
+
+
 
   ngOnDestroy() {
     this.locationService.stopWatching();
@@ -204,14 +221,15 @@ showSimpleNotification(message: string, from: string, align: string) {
       }
     }
 
-
-
     closeGuide() {
       const guideElement = document.getElementById('ios-install-guide');
       if (guideElement) {
         guideElement.style.display = 'none';
       }
     }
+
+
+
 
     onInstallClick() {
       this.promptInstall();
@@ -257,6 +275,11 @@ showSimpleNotification(message: string, from: string, align: string) {
       }
 
 
+      GetUserInfo(){
+        this.registroService.getBlackList().subscribe(data => {
+          this.posiciones = data;
+        });
+      }
 
 
 }

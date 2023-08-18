@@ -30,7 +30,9 @@ import { TrackDetailComponent } from './pistas/track-detail/track-detail.compone
 import { TrackResumeComponent } from './pistas/track-resume/track-resume.component';
 
 import { BrowserModule } from '@angular/platform-browser';
+import { DataTableBlacklistComponent } from './data-table-blacklist/data-table-blacklist.component';
 
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 @NgModule({
@@ -46,6 +48,7 @@ import { BrowserModule } from '@angular/platform-browser';
     MatFormFieldModule,
     ReactiveFormsModule,
     NgxQRCodeModule,
+    NgxDatatableModule,
     ToastrModule.forRoot()
   ],
   declarations: [
@@ -60,6 +63,7 @@ import { BrowserModule } from '@angular/platform-browser';
     TracksComponent,
     TrackDetailComponent,
     TrackResumeComponent,
+    DataTableBlacklistComponent, // Añádelo aquí
 
   ],
   providers: [DatePipe],

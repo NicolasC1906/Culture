@@ -1,9 +1,14 @@
-<div class="panel-header" style=" height: 10px;
+
+
+
+
+
+<!-- Si NO hay token -->
+<div *ngIf="!tokenExists">
+  <div class="panel-header" style=" height: 10px;
 padding-top: 19px;">
 </div>
-
-
-<!-- Sección de Introducción -->
+ <!-- Sección de Introducción -->
 <div >
 
   <!-- Start Landing Page -->
@@ -69,10 +74,6 @@ padding-top: 19px;">
   <!-- End Landing Page -->
 </div>
 
-
-
-
-
 <!-- Sección de Mapa con Efecto Parallax -->
 <div id="map-wrapper">
   <!-- Contenido que se superpondrá sobre el mapa -->
@@ -91,10 +92,94 @@ padding-top: 19px;">
   <div id="map" style="width: 100%; height: 100vh; background-color: #b3e0ff;"></div>
 </div>
 
-<!-- Sección de Conclusión -->
-<!-- <div class="section" style="background-color: #f2f2f2; height: 100vh; display: flex; align-items: center; justify-content: center;">
-  <h1>¡Gracias por visitar!</h1>
-</div> -->
+</div>
+
+<!-- Si hay token -->
+<div *ngIf="tokenExists">
+  <div class="panel-header panel-header-sm">
+  </div>
+  <div class="main-content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header d-flex flex-column justify-content-center align-items-center">
+            <h5 class="title text-reloj mb-2">Titulo</h5>
+
+            <p class="category m-0">Ruta de los andes</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <app-data-table-blacklist></app-data-table-blacklist>
+  </div>
+
+  <div class="main-content">
+    <div class="landing-page">
+      <header>
+        <div class="container">
+          <!-- <a href="#" class="logo">Culture <b>By Drivy</b></a> -->
+
+        </div>
+      </header>
+      <div class="content">
+        <div class="container">
+          <div class="info margin-left">
+            <h1>Precisión, vuelta tras vuelta.</h1>
+            <p>En culture utilizamos su posición GPS para calcular los tiempos de vuelta con la mayor precisión.</p>
+            <!-- Botón de instalación -->
+            <div *ngIf="isMobile">
+              <button [class.button-ios]="isIOS"
+                      [class.button-android]="!isIOS && isMobile"
+                      (click)="promptInstall(); showiOSInstallGuide()">
+                      <i *ngIf="isIOS" class="fab fa-apple">    </i>
+                      <i *ngIf="!isIOS && isMobile" class="fab fa-android"></i>
+                      Instalar Aplicación {{ isIOS ? 'iOS' : 'Android' }}
+              </button>
+          </div>
+
+
+            <!-- Botón de prueba -->
+            <button class="button-test" routerLink="/event">
+              Ver Eventos
+            </button>
+
+
+          </div>
+          <div class="image">
+            <img src="./assets/img/pin_home.png">
+          </div>
+        </div>
+
+      </div>
+
+          <div id="ios-install-guide" style="display: none;">
+            <h2>Instala esta aplicación desde navegador Safari</h2>
+            <ol>
+              <li>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ltXg1V3vKCQeC-XF-7-3EzRJreYP-k_kEPwaHlFVIpRzUTHeCq0WbTi4TeBq1bmg110&usqp=CAU" alt="Paso 1">
+                <p>Toca el botón de compartir: el rectángulo con la flecha hacia arriba en la parte inferior de la pantalla. </p>
+              </li>
+              <li>
+                <img src="https://elblogdealfocea.files.wordpress.com/2019/09/223ae-agregar-icono-a-la-pantalla-de-inicio-iphone-.png" alt="Paso 2">
+                <p>Desplázate hacia abajo y selecciona "Agregar a la pantalla de inicio".</p>
+              </li>
+              <li>
+                <img src="https://help.apple.com/assets/640A52196275DE31D4371B5E/640A52226275DE31D4371B8B/es_419/b3ba6d81c99ba11b643b884203dad6a1.png" alt="Paso 3">
+                <p>Confirma la acción y verás el ícono de la app en tu pantalla de inicio.</p>
+              </li>
+            </ol>
+            <button (click)="closeGuide()">Cerrar guía</button>
+          </div>
+
+
+    </div>
+  </div>
+
+</div>
+
+
 
 
 
