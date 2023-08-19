@@ -29,7 +29,6 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
-
 @NgModule({
   imports: [
     CommonModule,
@@ -39,7 +38,6 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     NgxQRCodeModule,
     NgbModalModule,
-    NgbCarouselModule,
     NgbCarouselModule,
     NgbCollapseModule,
     ToastrModule.forRoot()

@@ -1,151 +1,188 @@
-<div class="panel-header panel-header-sm">
+
+
+
+
+
+<!-- Si NO hay token -->
+<div *ngIf="!tokenExists">
+  <div class="panel-header" style=" height: 10px;
+padding-top: 19px;">
 </div>
-<div class="main-content">
-  <div class="row">
-    <div class="col">
-      <div class="card card-upgrade">
+ <!-- Sección de Introducción -->
+<div >
 
-        <div class="">
+  <!-- Start Landing Page -->
+  <div class="landing-page">
+    <header>
+      <div class="container">
+        <!-- <a href="#" class="logo">Culture <b>By Drivy</b></a> -->
 
-          <div class="container">
-            <!-- Nav -->
-            <nav class="main-nav">
-              <img src="./assets/img/logo_blank.png" alt="Microsoft" class="logo icono">
-
-            </nav>
-
-            <!-- Showcase -->
-            <header class="showcase">
-              <h2>19 De agosto</h2>
-              <p>
-                VILLETODROMO + PISCINA
-              </p>
-              <a href="#" class="btn">
-                INSCRIBETE AHORA <i class="fas fa-chevron-right"></i>
-              </a>
-            </header>
-
-            <!-- Home cards 1 -->
-            <section class="home-cards">
-              <div>
-                <img src="https://i.ibb.co/LZPVKq9/card1.png" alt="">
-                <h3>New Surface Pro 7</h3>
-                <p>
-                  See how Katie Sowers, Asst. Coach for the 49ers, uses Surface Pro 7
-                    to put her plans into play.
-                </p>
-                <a href="#">Learn More <i class="fas fa-chevron-right"></i></a>
-              </div>
-              <div>
-                <img src="https://i.ibb.co/KjGFHVJ/card2.png" alt="" />
-                <h3>New Surface Laptop 3</h3>
-                <p>
-                  Express yourself powerfully with a thin, light, and elegant design,
-                  faster performance, and up to 11.5 hours battery life.
-                </p>
-                <a href="#">Learn More <i class="fas fa-chevron-right"></i></a>
-              </div>
-              <div>
-                <img src="https://i.ibb.co/2cnshH6/card3.png" alt="" />
-                <h3>Save $150 + free controller</h3>
-                <p>
-                  Buy an Xbox One X console and double your fun with a free select
-                  extra controller. Starting at $349.
-                </p>
-                <a href="#">Learn More <i class="fas fa-chevron-right"></i></a>
-              </div>
-              <div>
-                <img src="https://i.ibb.co/G57P0Pb/card4.png" alt="" />
-                <h3>The new Microsoft Edge</h3>
-                <p>
-                  Expect more. World class performance, with more privacy, more
-                  productivity, and more value.
-                </p>
-                <a href="#">Learn More <i class="fas fa-chevron-right"></i></a>
-              </div>
-            </section>
-
-            <!-- Xbox -->
-            <section class="xbox">
-              <div class="content">
-                <h2>Xbox Game Pass Ultimate</h2>
-                <p>Xbox Game Pass Ultimate Xbox Live Gold and over 100 high-quality
-                  console and PC games. Play together with friends and discover your
-                  next favorite game.</p>
-                  <a href="#" class="btn">
-                    Join Now <i class="fas fa-chevron-right"></i>
-                  </a>
-              </div>
-            </section>
-
-            <!-- Home cards 2 -->
-              <section class="home-cards">
-                <div>
-                  <img src="https://i.ibb.co/zVqhWn2/card5.png" alt="" />
-                  <h3>Microsoft Teams</h3>
-                  <p>
-                    Unleash the power of your team.
-                  </p>
-                  <a href="#">Shop Now <i class="fas fa-chevron-right"></i></a>
-                </div>
-                <div>
-                  <img src="https://i.ibb.co/mGZcxcn/card6.jpg" alt="" />
-                  <h3>Unlock the power of learning</h3>
-                  <p>
-                    Get students future-ready with Windows 10 devices. Starting at $219.
-                  </p>
-                  <a href="#">Shop Now <i class="fas fa-chevron-right"></i></a>
-                </div>
-                <div>
-                  <img src="https://i.ibb.co/NpPvVHj/card7.png" alt="" />
-                  <h3>Windows 10 Enterprise</h3>
-                  <p>
-                    Download the free 90-day evaluation for IT professionals.
-                  </p>
-                  <a href="#">Download Now <i class="fas fa-chevron-right"></i></a>
-                </div>
-                <div>
-                  <img src="https://i.ibb.co/LkP4L5T/card8.png" alt="" />
-                  <h3>Explore Kubernetes</h3>
-                  <p>
-                    Learn how Kubernetes works and get started with cloud native app
-                    development today.
-                  </p>
-                  <a href="#">Get Started <i class="fas fa-chevron-right"></i></a>
-                </div>
-              </section>
-
-              <!-- Carbon -->
-              <section class="carbon dark">
-                <div class="content">
-                  <h2>Commiting To Carbon Negative</h2>
-                  <p>Microsoft will be carbon negative by 2030 and by 2050 we will remove
-                    all carbon the company has emitted since it was founded in 1975</p>
-                    <a href="#" class="btn">
-                      Learn More <i class="fas fa-chevron-right"></i>
-                    </a>
-                </div>
-              </section>
-
-              <!-- Follow -->
-              <section class="follow">
-                <p>Follow Microsoft</p>
-                <a href="https://facebook.com">
-                  <img src="https://i.ibb.co/LrVMXNR/social-fb.png" alt="Facebook">
-                </a>
-                <a href="https://twitter.com">
-                  <img src="https://i.ibb.co/vJvbLwm/social-twitter.png" alt="Twitter">
-                </a>
-                <a href="https://linkedin.com">
-                  <img src="https://i.ibb.co/b30HMhR/social-linkedin.png" alt="Linkedin">
-                </a>
-              </section>
-            </div>
+      </div>
+    </header>
+    <div class="content">
+      <div class="container">
+        <div class="info margin-left">
+          <h1>Precisión, vuelta tras vuelta.</h1>
+          <p>En culture utilizamos su posición GPS para calcular los tiempos de vuelta con la mayor precisión.</p>
+          <!-- Botón de instalación -->
+          <div *ngIf="isMobile">
+            <button [class.button-ios]="isIOS"
+                    [class.button-android]="!isIOS && isMobile"
+                    (click)="promptInstall(); showiOSInstallGuide()">
+                    <i *ngIf="isIOS" class="fab fa-apple">    </i>
+                    <i *ngIf="!isIOS && isMobile" class="fab fa-android"></i>
+                    Instalar Aplicación {{ isIOS ? 'iOS' : 'Android' }}
+            </button>
         </div>
 
 
+          <!-- Botón de prueba -->
+          <button class="button-test" (click)="scrollToMap()">
+            Prueba Gratis nuestro servicio
+          </button>
+
+
+        </div>
+        <div class="image">
+          <img src="./assets/img/pin_home.png">
+        </div>
+      </div>
+
+    </div>
+
+        <div id="ios-install-guide" style="display: none;">
+          <h2>Instala esta aplicación desde navegador Safari</h2>
+          <ol>
+            <li>
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ltXg1V3vKCQeC-XF-7-3EzRJreYP-k_kEPwaHlFVIpRzUTHeCq0WbTi4TeBq1bmg110&usqp=CAU" alt="Paso 1">
+              <p>Toca el botón de compartir: el rectángulo con la flecha hacia arriba en la parte inferior de la pantalla. </p>
+            </li>
+            <li>
+              <img src="https://elblogdealfocea.files.wordpress.com/2019/09/223ae-agregar-icono-a-la-pantalla-de-inicio-iphone-.png" alt="Paso 2">
+              <p>Desplázate hacia abajo y selecciona "Agregar a la pantalla de inicio".</p>
+            </li>
+            <li>
+              <img src="https://help.apple.com/assets/640A52196275DE31D4371B5E/640A52226275DE31D4371B8B/es_419/b3ba6d81c99ba11b643b884203dad6a1.png" alt="Paso 3">
+              <p>Confirma la acción y verás el ícono de la app en tu pantalla de inicio.</p>
+            </li>
+          </ol>
+          <button (click)="closeGuide()">Cerrar guía</button>
+        </div>
+
+
+  </div>
+  <!-- End Landing Page -->
+</div>
+
+<!-- Sección de Mapa con Efecto Parallax -->
+<div id="map-wrapper">
+  <!-- Contenido que se superpondrá sobre el mapa -->
+  <div class="overlay-content">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="content-box" >
+
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- Mapa (Por simplicidad, lo representaré con un color de fondo) -->
+
+  <div id="map" style="width: 100%; height: 100vh; background-color: #b3e0ff;"></div>
 </div>
+
+</div>
+
+<!-- Si hay token -->
+<div *ngIf="tokenExists">
+  <div class="panel-header panel-header-sm">
+  </div>
+  <div class="main-content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header d-flex flex-column justify-content-center align-items-center">
+            <h5 class="title text-reloj mb-2">Tabla General</h5>
+
+            <p class="category m-0">Top Puntaje</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <app-data-table-blacklist></app-data-table-blacklist>
+  </div>
+
+  <div class="main-content">
+    <div class="landing-page">
+      <header>
+        <div class="container">
+          <!-- <a href="#" class="logo">Culture <b>By Drivy</b></a> -->
+
+        </div>
+      </header>
+      <div class="content">
+        <div class="container">
+          <div class="info margin-left">
+            <h1>Precisión, vuelta tras vuelta.</h1>
+            <p>En culture utilizamos su posición GPS para calcular los tiempos de vuelta con la mayor precisión.</p>
+            <!-- Botón de instalación -->
+            <div *ngIf="isMobile">
+              <button [class.button-ios]="isIOS"
+                      [class.button-android]="!isIOS && isMobile"
+                      (click)="promptInstall(); showiOSInstallGuide()">
+                      <i *ngIf="isIOS" class="fab fa-apple">    </i>
+                      <i *ngIf="!isIOS && isMobile" class="fab fa-android"></i>
+                      Instalar Aplicación {{ isIOS ? 'iOS' : 'Android' }}
+              </button>
+          </div>
+
+
+            <!-- Botón de prueba -->
+            <button class="button-test" routerLink="/event">
+              Ver Eventos
+            </button>
+
+
+          </div>
+          <div class="image">
+            <img src="./assets/img/pin_home.png">
+          </div>
+        </div>
+
+      </div>
+
+          <div id="ios-install-guide" style="display: none;">
+            <h2>Instala esta aplicación desde navegador Safari</h2>
+            <ol>
+              <li>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ltXg1V3vKCQeC-XF-7-3EzRJreYP-k_kEPwaHlFVIpRzUTHeCq0WbTi4TeBq1bmg110&usqp=CAU" alt="Paso 1">
+                <p>Toca el botón de compartir: el rectángulo con la flecha hacia arriba en la parte inferior de la pantalla. </p>
+              </li>
+              <li>
+                <img src="https://elblogdealfocea.files.wordpress.com/2019/09/223ae-agregar-icono-a-la-pantalla-de-inicio-iphone-.png" alt="Paso 2">
+                <p>Desplázate hacia abajo y selecciona "Agregar a la pantalla de inicio".</p>
+              </li>
+              <li>
+                <img src="https://help.apple.com/assets/640A52196275DE31D4371B5E/640A52226275DE31D4371B8B/es_419/b3ba6d81c99ba11b643b884203dad6a1.png" alt="Paso 3">
+                <p>Confirma la acción y verás el ícono de la app en tu pantalla de inicio.</p>
+              </li>
+            </ol>
+            <button (click)="closeGuide()">Cerrar guía</button>
+          </div>
+
+
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+
 

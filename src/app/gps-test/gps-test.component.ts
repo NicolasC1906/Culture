@@ -81,10 +81,7 @@ export class GpsTestComponent implements OnInit, OnDestroy {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
     subdomains: 'abcd',
     maxZoom: 19,
-    zoomSnap: 0.25,
-    zoomDelta: 0.25,
     minZoom: 3.25,
-    zoomControl: true
 
   }).addTo(this.map);
    // Utiliza el complemento para trazar la ruta
@@ -95,7 +92,6 @@ export class GpsTestComponent implements OnInit, OnDestroy {
       ],
       routeWhileDragging: true,
       show: false ,
-      language: 'es'
   }).addTo(this.map);
 
     // Configura la ruta  aquí (si se desea)

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RegistroService } from '../../services/registro.service';
+import { RegistroService, Vehicle } from '../../services/registro.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
@@ -26,6 +26,10 @@ export class UserProfileComponent implements OnInit {
 
    // Lista de vehículos:
    public vehicles: any[] = [];
+   selectedVehicleId: number;
+   vehicleIdToEdit: number | null = null;
+
+
 
   // Sliderç
   public isCollapsed = true;
@@ -145,16 +149,29 @@ export class UserProfileComponent implements OnInit {
 
     handleFileInput(event) {
       const file = event.target.files[0];
+
+      // Comprueba si el archivo supera los 5 MB
+      if (file.size > 5 * 1024 * 1024) {  // 5 MB = 5 * 1024 * 1024 bytes
+          this.toastr.error('El archivo es demasiado grande. Por favor, sube una imagen de menos de 5 MB.', 'Atención', {
+            timeOut: 80000,
+            closeButton: true,
+            enableHtml: true,
+            toastClass: "alert alert-danger",
+            positionClass: 'toast-top-center',
+          })
+        return;
+      }
+
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-        const base64Image = e.target.result;
-        this.imageToShow = base64Image;
-        this.garajeForm.get('photo').setValue(base64Image.split(',')[1]);
+          const base64Image = e.target.result;
+          this.imageToShow = base64Image;
+          this.garajeForm.get('photo').setValue(base64Image.split(',')[1]);
       };
 
       reader.readAsDataURL(file);
-    }
+  }
 
 
 
@@ -167,7 +184,7 @@ export class UserProfileComponent implements OnInit {
 
          // Manejar respuesta, por ejemplo mostrar un mensaje de éxito.
          this.toastr.success('La información se ha actualizado correctamente.', 'Atención', {
-          timeOut: 8000,
+          // timeOut: 8000,
           closeButton: true,
           enableHtml: true,
           toastClass: "alert alert-info alert-with-icon",
@@ -311,6 +328,67 @@ export class UserProfileComponent implements OnInit {
       const lowerCaseFilter = this.filterValue.toLowerCase();
       this.filteredCities = this.cities.filter(city => city.name.toLowerCase().includes(lowerCaseFilter));
     }
+
+
+
+    onEditVehicleClick(vehicle: Vehicle) {
+      this.vehicleIdToEdit = vehicle.id;
+      this.garajeForm.patchValue({
+          brand: vehicle.brand,
+          model: vehicle.model,
+          year: vehicle.year,
+          photo: vehicle.photo
+      });
+      this.isCollapsed2 = false;  // Abre el colapsable
+  }
+
+
+    updateVehicle() {
+      const formData = this.garajeForm.value;
+      console.log('Datos enviados a la API:', formData);
+      this.isUpdating = true;
+
+      this.registroService.editCarGaraje(formData, this.vehicleIdToEdit).subscribe(response => {
+          this.toastr.success('El vehículo se ha actualizado correctamente.', 'Atención', {
+              closeButton: true,
+              enableHtml: true,
+              toastClass: "alert alert-info alert-with-icon",
+              positionClass: 'toast-top-right',
+          }).onHidden.subscribe(() => {
+              this.isUpdating = false;
+              this.loadUserVehicles();
+          });
+      }, error => {
+          this.toastr.error('Hubo un error al actualizar la información del vehículo.');
+      });
+  }
+
+
+  onDeleteVehicleClick(vehicle: Vehicle) {
+    const isConfirmed = confirm('¿Estás seguro de que deseas eliminar este vehículo?');
+
+    if (isConfirmed) {
+
+        this.registroService.DeleteCarGaraje({}, vehicle.id).subscribe(response => {
+            this.toastr.success('El vehículo se ha eliminado correctamente.', 'Atención', {
+                closeButton: true,
+                enableHtml: true,
+                toastClass: "alert alert-info alert-with-icon",
+                positionClass: 'toast-top-right',
+            }).onHidden.subscribe(() => {
+
+                this.loadUserVehicles();
+            });
+        }, error => {
+            this.toastr.error('Hubo un error al eliminar el vehículo.');
+
+        });
+    }
+}
+
+
+
+
 
 
 
