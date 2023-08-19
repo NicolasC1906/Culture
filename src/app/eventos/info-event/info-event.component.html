@@ -101,30 +101,42 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-md-8 mt-4">
-            <div class="card">
+            <div class="card p-3">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="title">Pistas del evento</h5>
-                    <h4>{{errorMessage}}</h4>
-                    <div class="">
-                    <div class="card p-3">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <div class="col-md-4 " *ngFor="let pista of pistasevent">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3>{{pista.description}}</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <h3>Orden: {{pista.order}}</h3>
-                                        <h4>Nombre de la pista: {{pista.Track.name}}</h4>
-                                    </div>
-                                    <a class="btn btn-primary">
-                                        {{ buttonText }} <i class="fas fa-chevron-right"></i>
-                                    </a>
-                                </div>
+                        <div class="">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                <th>
+                                    Nombre
+                                </th>
+                                <th>
+                                    Orden
+                                </th>
+                                <th>
+                                    Accion
+                                </th>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let pista of pistasevent">
+                                    <td>
+                                        {{pista.description}}
+                                    </td>
+                                    <td>
+                                        Orden: {{pista.order}} 
+                                        Nombre de la pista: {{pista.Track.name}}
+                                    </td>
+                                    <td>
+                                        <button (click)="iniciarPista(pista.id)" class="btn btn-primary" >{{ buttonText }}</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                             </div>
+                        </div>
 
-            </div>
-                    </div>
                 </div>
             </div>
             </div>

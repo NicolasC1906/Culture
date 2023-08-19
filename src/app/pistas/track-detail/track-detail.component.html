@@ -30,21 +30,83 @@
           </div>
           
         </div>
-        <div class="card card-upgrade">
+        <div class="card card-upgrade justify-content-center">
 
             <div class="">
                 <div class="login-box">
                     <form>
-                      <a href="#">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        Iniciar Pista
-                      </a>
+                        <a  (click)="iniciarPista()">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            Iniciar Pista
+                          </a>
+                          
+                          <!-- Modal para selección de vehículo -->
+                          <div *ngIf="showModal" class="modal">
+                            <h2>Selecciona un vehículo</h2>
+                            <ul>
+                              <li *ngFor="let vehiculo of vehiculos" (click)="seleccionarVehiculo(vehiculo.id)">{{ vehiculo.nombre }}</li>
+                            </ul>
+                          </div>
                     </form>
                   </div>
+                  
               </div>
-              
+
             </div>
+           
       </div>
+      <div class="row justify-content-center">
+        <div class="col-md-12 mt-4">
+                <div class="row">
+                    <div class="col">
+                        <div class="col-md-12">
+                            <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Tabla de posiciones General</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                    <th>
+                                        Nombre de usuario
+                                    </th>
+                                    <th>
+                                        Tiempo
+                                    </th>
+                                    <th>
+                                        Max Velocidad
+                                    </th>
+                                    <th class="text-right">
+                                        Velocidad Promedio
+                                    </th>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let user of posiciones ">
+                                        <td>
+                                            {{user.username}}
+                                        </td>
+                                        <td>
+                                            {{user.time}}
+                                        </td>
+                                        <td>
+                                            {{user.maxSpeed}}                               
+                                    </td>
+                                        <td class="text-right">
+                                        {{user.avgSpeed}}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
