@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import { LocationService } from '../../services/location.service';
@@ -74,6 +74,10 @@ private getMidpoint(lat1: number, lon1: number, lat2: number, lon2: number): [nu
     this.totalDistance = 0;
    }
 
+   @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any): void {
+    $event.returnValue = true;
+  }
   ngOnInit() {
     this.noSleep.enable();
     this.tokenExists = !!localStorage.getItem('token');
@@ -128,13 +132,13 @@ private getMidpoint(lat1: number, lon1: number, lat2: number, lon2: number): [nu
 
   private initMap(initialLocation: L.LatLng): void {
     this.map = L.map('map', {
-      zoomControl: true,
+      zoomControl: false,
       dragging: true,
       touchZoom: true,
-      scrollWheelZoom: true,
+      scrollWheelZoom: false,
       doubleClickZoom: true,
-      boxZoom: true,
-      keyboard: true
+      boxZoom: false,
+      keyboard: false
     }).setView([initialLocation.lat, initialLocation.lng], 13);
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
