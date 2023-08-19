@@ -18,6 +18,7 @@
             "polyfills": "src/polyfills.ts",
             "allowedCommonJsDependencies": ["hammerjs", "chart.js"],
             "assets": [
+              "src/manifest.json",
               "src/assets",
               "src/favicon.ico"
             ],

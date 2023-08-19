@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from './../environments/environment';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+
 
 
 interface UserProfileResponse {
@@ -24,10 +27,20 @@ export interface Vehicle {
   UserId: number;
 }
 
+export interface trackId {
+  id: number;
+  name: string;
+  startCoord: string;
+  endCoord: string;
+  photo: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class RegistroService {
+
+
 
   constructor(private http: HttpClient,  private router: Router) { }
 
@@ -63,14 +76,35 @@ export class RegistroService {
     return this.http.get<Vehicle[]>(`${environment.apiBaseUrl}/obtenergaraje/${id}`);
   }
 
+  getTrackId(id: number): Observable<trackId> {
+    return this.http.get<trackId>(`${environment.apiBaseUrl}/pista/${id}`).pipe(
+        catchError((error) => {
+            console.error('Error fetching track ID:', error);
+            return throwError(error); // Esto reemitirá el error para que puedas manejarlo en tu componente
+        })
+    );
+}
 
   editCarGaraje(data: any, id: number) {
     return this.http.put(`${environment.apiBaseUrl}/editarvehiculo/${id}`, data);
-  }
+}
+
 
   DeleteCarGaraje(data: any, id: number) {
-    return this.http.delete(`${environment.apiBaseUrl}/editarvehiculo/${id}`, data);
+    return this.http.delete(`${environment.apiBaseUrl}/eliminarvehiculo/${id}`, data);
   }
+  getBlackList(): Observable<any[]> {
+    return this.http.get<any[]>(`https://culture.apiimd.com/tablaDePosiciones`)
+        .pipe(
+            catchError(error => {
+                console.error('Error al obtener la tabla de posiciones:', error);
+                return throwError(error);
+            })
+        );
+}
+
+
+
 
   logout() {
     localStorage.removeItem('token');

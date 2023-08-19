@@ -29,8 +29,11 @@ import { TracksComponent } from './pistas/tracks/tracks.component';
 import { TrackDetailComponent } from './pistas/track-detail/track-detail.component';
 import { TrackResumeComponent } from './pistas/track-resume/track-resume.component';
 
+import { BrowserModule } from '@angular/platform-browser';
+import { DataTableBlacklistComponent } from './data-table-blacklist/data-table-blacklist.component';
 
-
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { MapTrackComponent } from './map-track/map-track.component';
 
 
 @NgModule({
@@ -46,6 +49,7 @@ import { TrackResumeComponent } from './pistas/track-resume/track-resume.compone
     MatFormFieldModule,
     ReactiveFormsModule,
     NgxQRCodeModule,
+    NgxDatatableModule,
     ToastrModule.forRoot()
   ],
   declarations: [
@@ -60,6 +64,8 @@ import { TrackResumeComponent } from './pistas/track-resume/track-resume.compone
     TracksComponent,
     TrackDetailComponent,
     TrackResumeComponent,
+    DataTableBlacklistComponent,
+    MapTrackComponent, // Añádelo aquí
 
   ],
   providers: [DatePipe],

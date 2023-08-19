@@ -5,7 +5,7 @@
     <div class="col-md-8">
       <div class="card">
         <div class="card-header">
-          <h5 class="title">Deseas editar el perfil usuario</h5>
+          <h5 class="title">Editar el perfil usuario</h5>
         </div>
         <!-- Card user info -->
         <!-- <div *ngIf="isLoading" class="loading">Cargando...</div> -->
@@ -161,7 +161,9 @@
                       <div class="form-group">
                           <label>Subir Foto </label>
                           <div class="custom-file-upload">
-                              <input type="file" id="fileInput" (change)="handleFileInput($event)" class="form-control-file" hidden>
+                              <!-- <input type="file" id="fileInput" (change)="handleFileInput($event)" class="form-control-file" hidden> -->
+                              <input type="file" id="fileInput"(change)="handleFileInput($event)" class="form-control-file" hidden accept="image/*" max-size="5000000">
+                                <!-- max-size en bytes, ej. 5MB = 5000000 bytes -->
                               <label for="fileInput">
                                   <i class="fas fa-paperclip"></i> Elijir el archivo (JPG, PNG, JEPG)
                               </label>
@@ -194,7 +196,7 @@
           <div #collapse2="ngbCollapse" [(ngbCollapse)]="isCollapsed2">
             <div class="card">
               <div class="card-body">
-                <form [formGroup]="garajeForm" (ngSubmit)="enviarDatosGaraje()">
+                <form [formGroup]="garajeForm">
                   <div class="row">
                     <div class="col-md-5 pr-1">
                       <div class="form-group">
@@ -232,7 +234,7 @@
                           <div class="custom-file-upload">
                               <input type="file" id="fileInput" (change)="handleFileInput($event)" class="form-control-file" hidden>
                               <label for="fileInput">
-                                  <i class="fas fa-paperclip"></i> Eligir archivo (JPG, PNG, JEPG)
+                                  <i class="fas fa-paperclip"></i> Eligir archivo (JPG, PNG, JEPG - 1MG)
                               </label>
                           </div>
                       </div>
@@ -251,7 +253,7 @@
                   <hr>
 
 
-                  <button class="btn btn-primary update-btn" (click)="actualizarInformacion()">
+                  <button class="btn btn-primary update-btn" (click)="updateVehicle()">
                     <i class="now-ui-icons loader_refresh" [ngClass]="{'spin': isUpdating}"></i>
                     {{ isUpdating ? 'Generando Cambios' : 'Actualizar Vehiculo' }}
                 </button>
@@ -276,13 +278,14 @@
                 <button type="button"
                         class="btn btn-info"
                         (click)="collapse2.toggle()"
+                        (click)="onEditVehicleClick(vehicle)"
                         [attr.aria-expanded]="!isCollapsed2">
                     <i class="now-ui-icons ui-2_settings-90"></i> Editar
                 </button>
-                <button type="button"
-                        class="btn btn-danger">
-                    <i class="now-ui-icons ui-1_simple-remove"></i> Eliminar
-                </button>
+                <button type="button" class="btn btn-danger" (click)="onDeleteVehicleClick(vehicle)">
+                  <i class="now-ui-icons ui-1_simple-remove"></i> Eliminar
+              </button>
+
             </div>
 
             </div>

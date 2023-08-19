@@ -1,0 +1,85 @@
+<!-- tu-componente.component.html -->
+
+
+
+
+<!-- Si está cargando, muestra el spinner -->
+<div *ngIf="isLoading" class="loader"></div>
+
+<!-- Si NO está cargando, muestra el contenido -->
+<div *ngIf="!isLoading">
+  <div  style="margin-top: 10px;">
+
+    <!-- En data-table-blacklist.component.html -->
+    <ngx-datatable
+    class="material"
+    [rows]="posiciones"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="'auto'"
+    [limit]="limit"
+    [count]="count"
+    [offset]="offset"
+    (page)='onPage($event)'
+    [scrollbarH]="false"
+  >
+
+    <!-- Columna Username -->
+<ngx-datatable-column name="Username" prop="username" [width]="150" resizeable="true">
+  <ng-template ngx-datatable-cell-template let-row="row">
+      <span *ngIf="row.username; else noInfoUsername">{{ row.username }}</span>
+      <ng-template #noInfoUsername><span>No Info</span></ng-template>
+  </ng-template>
+</ngx-datatable-column>
+
+<!-- Columna Puntos -->
+<ngx-datatable-column name="Puntos" prop="puntos" [width]="150" resizeable="true">
+  <ng-template ngx-datatable-cell-template let-row="row">
+      <span *ngIf="row.puntos; else noInfoPuntos">{{ row.puntos }}</span>
+      <ng-template #noInfoPuntos><span>No Info</span></ng-template>
+  </ng-template>
+</ngx-datatable-column>
+
+<!-- Columna Posición -->
+<ngx-datatable-column name="Posición" prop="posicion" [width]="150" resizeable="true">
+  <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row.posicion }}
+      <ng-container *ngIf="row.posicion === 1">
+          <span class="medal-gold">🏅</span> <!-- Medalla dorada -->
+      </ng-container>
+      <ng-container *ngIf="row.posicion === 2">
+          <span class="medal-silver">🏅</span> <!-- Medalla plata -->
+      </ng-container>
+      <ng-container *ngIf="row.posicion === 3">
+          <span class="medal-bronze">🏅</span> <!-- Medalla bronce -->
+      </ng-container>
+  </ng-template>
+</ngx-datatable-column>
+
+
+<!-- Columna Marca -->
+<ngx-datatable-column name="Marca" [width]="150" resizeable="true">
+  <ng-template ngx-datatable-cell-template let-row="row">
+      <span *ngIf="row.garage[0]?.brand; else noInfoMarca">{{ row.garage[0]?.brand }}</span>
+      <ng-template #noInfoMarca><span>No Info</span></ng-template>
+  </ng-template>
+</ngx-datatable-column>
+
+<!-- Columna Modelo -->
+<ngx-datatable-column name="Modelo" [width]="150" resizeable="true">
+  <ng-template ngx-datatable-cell-template let-row="row">
+      <span *ngIf="row.garage[0]?.model; else noInfoModelo">{{ row.garage[0]?.model }}</span>
+      <ng-template #noInfoModelo><span>No Info</span></ng-template>
+  </ng-template>
+</ngx-datatable-column>
+
+
+
+
+  </ngx-datatable>
+
+
+
+</div>
+</div>
