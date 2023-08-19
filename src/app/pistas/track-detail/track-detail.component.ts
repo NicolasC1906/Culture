@@ -4,6 +4,7 @@ import { LocationService } from '../../../services/location.service';
 import 'leaflet-routing-machine';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-track-detail',
@@ -22,13 +23,17 @@ export class TrackDetailComponent {
   private cordenatefinal: any;
   datamap: any;
   distanciatotal: number;
+  posiciones: any;
+  vehiculos: any[] = [];
+  showModal: boolean = false;
 
   
   constructor(
     private locationService: LocationService,
     private el: ElementRef,
     private route: ActivatedRoute,
-    private http: HttpClient,) {}
+    private http: HttpClient,
+    private router: Router) {}
 
   @HostListener('window:scroll', ['$event'])
   onScroll(event) {
@@ -41,12 +46,24 @@ export class TrackDetailComponent {
 
   ngOnInit() {
     this.obtenerinfo();
+    this.obtenertabladeposiciones()
   }
 
   ngOnDestroy() {
     if (this.routeControl) {
         this.routeControl.remove();
     }
+}
+
+obtenertabladeposiciones(){
+  this.route.params.subscribe(params => {
+    const idTrack = params['id']; // obtiene el 'id' de la URL
+    
+    this.http.get<Event[]>(`https://culture.apiimd.com/pista/${idTrack}/mejorestiempos`).subscribe((data:any) => {
+      console.log(data)
+      this.posiciones = data;
+    });
+  });
 }
 obtenerinfo(){
   this.route.params.subscribe(params => {
@@ -137,4 +154,34 @@ obtenerinfo(){
   }
 
 
+  iniciarPista() {
+    const userId = localStorage.getItem('idUser');
+
+    if (userId) {
+      this.http.get(`https://culture.apiimd.com/obtenergaraje/${userId}`).subscribe((res: any) => {
+        if (res.length === 1) {
+          this.procederConVehiculo(res[0].id);
+        } else if (res.length > 1) {
+          this.vehiculos = res;
+          this.showModal = true;
+        }
+      });
+    }
+  }
+
+  seleccionarVehiculo(id: string) {
+    this.procederConVehiculo(id);
+    this.showModal = false;
+  }
+
+  procederConVehiculo(idVehiculo: string) {
+    localStorage.setItem('idVehiculo', idVehiculo);
+    localStorage.setItem('idPista', this.getIdPistaFromURL());
+    this.router.navigate(['/pista']);
+  }
+
+  getIdPistaFromURL(): string {
+    const urlSegments = this.router.url.split('/');
+    return urlSegments[urlSegments.length - 1];
+  }
 }

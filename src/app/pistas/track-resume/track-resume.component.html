@@ -1,1 +1,105 @@
-<p>track-resume works!</p>
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col">
+      <div class="card card-upgrade">
+
+        <div class="">       
+       
+            <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">Resumen de Pista</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead class=" text-primary">
+                          <th>
+                            Username
+                          </th>
+                          <th>
+                            Tiempo
+                          </th>
+                          <th>
+                            Vel Max
+                          </th>
+                          <th class="text-right">
+                            Vel Promedio
+                          </th>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              {{username}}
+                            </td>
+                            <td>
+                              {{Tiempo}}
+                            </td>
+                            <td>
+                              {{VelMax}}
+                            </td>
+                            <td class="text-right">
+                              {{VelPromedio}}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+    </div>
+</div>
+</div>
+</div>
+<div class="row" *ngIf="evento">
+    <div class="col">
+      <div class="card card-upgrade">
+
+        <div class="">       
+       
+            <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">Siguiente Pista</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead class=" text-primary">
+                          <th>
+                            Nombre
+                          </th>
+                          <th>
+                            Orden
+                          </th>
+                          <th class="text-right">
+                            Accion
+                          </th>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of tracks">
+                            <td >
+                              {{item.description}}
+                            </td>
+                            <td>
+                              {{item.order}}
+                            </td>
+                            <td class="text-right">
+                              <button (click)="goToNextTrack()" class="btn btn-primary">Siguiente Pista</button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+        

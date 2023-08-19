@@ -7,6 +7,7 @@ import { LocationService } from '../../../services/location.service';
 import 'leaflet-routing-machine';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router'; // Importa el servicio Router
 
 @Component({
   selector: 'app-info-event',
@@ -43,7 +44,8 @@ export class InfoEventComponent {
     private route: ActivatedRoute,
     private datePipe: DatePipe,
     private locationService: LocationService,
-    private el: ElementRef,) {
+    private el: ElementRef,
+    private router: Router) {
     this.route.params.subscribe(params => {
       this.eventId = +params['id']; // El '+' convierte el string a número.
     });
@@ -61,7 +63,7 @@ export class InfoEventComponent {
     this.checkUserRegistration();
     this.route.params.subscribe(params => {
       const eventId = params['id']; // obtiene el 'id' de la URL
-      
+      localStorage.setItem("Idevent", eventId)
       this.http.get<Event[]>(`https://culture.apiimd.com/event/${eventId}`).subscribe(data => {
         this.event = data;
         this.comparaciondefecha();
@@ -249,6 +251,13 @@ export class InfoEventComponent {
       // Puedes mostrar un mensaje al usuario si su navegador no soporta geolocalización
   }
   }
+  iniciarPista(id){
+    localStorage.setItem('idPista', id.toString());
+
+      // Redirigir al usuario a la dirección '/map-track'
+      this.router.navigate(['/map-track']);
+  }
+
   
 }
 
