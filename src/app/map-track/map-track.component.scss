@@ -1,0 +1,109 @@
+.map-container {
+  position: relative;
+}
+
+.card-header {
+  font-size: 1.2em; /* Aumentar el tamaño de la fuente */
+    padding: 15px; /* Aumentar el padding */
+    width: 150px; /* Ancho fijo, si es necesario. Puedes ajustarlo según lo necesites. */
+    /* ... otros estilos ... */
+  position: absolute;
+  top: 10px; /* Puedes ajustar este valor según lo necesites */
+  left: 50%; /* Centra el div horizontalmente */
+  transform: translateX(-50%); /* Centra el div horizontalmente */
+  z-index: 10; /* Asegura que el div esté encima del mapa */
+  background-color: rgba(255,255,255,0.8); /* Un fondo blanco con algo de transparencia */
+  border-radius: 5px;
+  z-index: 1000;
+}
+.title.text-reloj {
+  font-size: 1.5em; /* Aumentar el tamaño de la fuente del cronómetro */
+}
+
+#map {
+  z-index: 1;
+}
+
+@media (max-width: 576px) {
+  .speedmeter {
+      bottom: 10px;
+      left: 10px;
+      /* Aquí puedes hacer cualquier otro ajuste, como cambiar el tamaño de la fuente, etc. */
+  }
+}
+
+  .speedmeter {
+    /*   text-align: center; */
+    position: absolute; /* Posicionamos el speedmeter de manera absoluta respecto al gps-map */
+    bottom: 20px;       /* 20px desde el borde inferior, ajusta según prefieras */
+    left: 50%;          /* Centra el div horizontalmente */
+    transform: translateX(-50%); /* Centra el div horizontalmente considerando su propio ancho */
+    width: 150px; /* Puede ser cualquier valor según el diseño que necesites */
+    z-index: 1000;
+    }
+    .dot {
+      position: absolute;
+      width: 64px;
+      height: 4px;
+      background: rgb(222, 0, 0);
+        transform: rotate(0deg);
+    /*   border: 2px solid #3ADA98; */
+      bottom: 13.5px;
+      left: 1px;
+    /*   animation: speed 5s linear infinite; */
+    transform-origin: 100% center;
+    }
+
+    .dot:before {
+      content: '';
+      border: 2px solid #3ADA98;
+      background: transparent;
+      border-radius: 50%;
+      width: 4px;
+      height: 4px;
+      position: absolute;
+      top: 0;
+      left: 0px;
+      right: 0;
+      bottom:0px;
+    }
+
+
+    @keyframes speed {
+      100% {
+        transform: rotate(180deg) translate(-11.5px, 0px);
+        transform-origin: 100% center;
+      }
+    }
+
+
+    .meter {
+      width: 130px;
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%); /* Centra el div horizontalmente considerando su propio ancho */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      font-family: arial;
+      text-align: center;
+  }
+
+    .meter p {
+      margin: 0;
+      padding: 0;
+
+    }
+
+    #number {
+      font-size: 20px;
+    }
+
+    .speedmeter,
+.speedmeter p,
+.speedmeter h5, /* y cualquier otro elemento de texto que quieras cambiar a blanco dentro de speedmeter */
+.speedmeter #number,
+.speedmeter #status {
+    color: white;
+}

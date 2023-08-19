@@ -33,6 +33,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { DataTableBlacklistComponent } from './data-table-blacklist/data-table-blacklist.component';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { MapTrackComponent } from './map-track/map-track.component';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     TracksComponent,
     TrackDetailComponent,
     TrackResumeComponent,
-    DataTableBlacklistComponent, // Añádelo aquí
+    DataTableBlacklistComponent,
+    MapTrackComponent, // Añádelo aquí
 
   ],
   providers: [DatePipe],

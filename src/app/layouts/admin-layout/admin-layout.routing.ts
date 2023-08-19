@@ -7,7 +7,7 @@ import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
-import { UpgradeComponent } from '../../upgrade/upgrade.component'; 
+import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { GpsTestComponent } from '../../gps-test/gps-test.component';
 import { MapTestComponent } from '../../map-test/map-test.component';
 import { AuthGuard } from '../../guards/auth.guard';
@@ -16,6 +16,7 @@ import { EventsComponent } from '../../eventos/events/events.component';
 import { InfoEventComponent } from '../../eventos/info-event/info-event.component';
 import { TracksComponent } from '../../pistas/tracks/tracks.component';
 import { TrackDetailComponent } from '../../pistas/track-detail/track-detail.component';
+import { MapTrackComponent } from '../..//map-track/map-track.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'home',      component: HomeComponent },
@@ -33,5 +34,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'event-detail/:id', component: InfoEventComponent, canActivate: [AuthGuard] },
     { path: 'tracks',        component: TracksComponent, canActivate: [AuthGuard] },
     { path: 'track-detail/:id', component: TrackDetailComponent, canActivate: [AuthGuard] },
-
+    { path: 'map-track',        component: MapTrackComponent, canActivate: [AuthGuard] },
 ];

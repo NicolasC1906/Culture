@@ -27,6 +27,14 @@ export interface Vehicle {
   UserId: number;
 }
 
+export interface trackId {
+  id: number;
+  name: string;
+  startCoord: string;
+  endCoord: string;
+  photo: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -67,6 +75,15 @@ export class RegistroService {
   getUsuarioGaraje(id: number): Observable<Vehicle[]> {
     return this.http.get<Vehicle[]>(`${environment.apiBaseUrl}/obtenergaraje/${id}`);
   }
+
+  getTrackId(id: number): Observable<trackId> {
+    return this.http.get<trackId>(`${environment.apiBaseUrl}/pista/${id}`).pipe(
+        catchError((error) => {
+            console.error('Error fetching track ID:', error);
+            return throwError(error); // Esto reemitirá el error para que puedas manejarlo en tu componente
+        })
+    );
+}
 
   editCarGaraje(data: any, id: number) {
     return this.http.put(`${environment.apiBaseUrl}/editarvehiculo/${id}`, data);

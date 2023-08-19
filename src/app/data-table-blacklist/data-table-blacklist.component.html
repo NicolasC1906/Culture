@@ -74,14 +74,6 @@
   </ng-template>
 </ngx-datatable-column>
 
-<!-- Columna Año -->
-<ngx-datatable-column name="Año" [width]="150" resizeable="true">
-  <ng-template ngx-datatable-cell-template let-row="row">
-      <span *ngIf="row.garage[0]?.year; else noInfoAno">{{ row.garage[0]?.year }}</span>
-      <ng-template #noInfoAno><span>No Info</span></ng-template>
-  </ng-template>
-</ngx-datatable-column>
-
 
 
 
