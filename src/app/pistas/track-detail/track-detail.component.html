@@ -44,12 +44,7 @@
                           </a>
                           
                           <!-- Modal para selección de vehículo -->
-                          <div *ngIf="showModal" class="modal">
-                            <h2>Selecciona un vehículo</h2>
-                            <ul>
-                              <li *ngFor="let vehiculo of vehiculos" (click)="seleccionarVehiculo(vehiculo.id)">{{ vehiculo.nombre }}</li>
-                            </ul>
-                          </div>
+                          
                     </form>
                   </div>
                   
@@ -63,6 +58,14 @@
                 <div class="row">
                     <div class="col">
                         <div class="col-md-12">
+                            <div *ngIf="showModal">
+                                <h3>Selecciona un vehículo:</h3>
+                                <ul>
+                                  <li class="btn-primary" *ngFor="let vehiculo of vehiculos" (click)="seleccionarVehiculo(vehiculo.id)">
+                                    {{ vehiculo.brand }} <!-- Suponiendo que tus vehículos tienen una propiedad 'nombre' -->
+                                  </li>
+                                </ul>
+                              </div>
                             <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Tabla de posiciones General</h4>

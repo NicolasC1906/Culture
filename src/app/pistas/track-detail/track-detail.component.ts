@@ -5,6 +5,7 @@ import 'leaflet-routing-machine';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-track-detail',
@@ -33,7 +34,9 @@ export class TrackDetailComponent {
     private el: ElementRef,
     private route: ActivatedRoute,
     private http: HttpClient,
-    private router: Router) {}
+    private router: Router,
+    private toastr: ToastrService,
+    ) {}
 
   @HostListener('window:scroll', ['$event'])
   onScroll(event) {
@@ -162,6 +165,7 @@ obtenerinfo(){
         if (res.length === 1) {
           this.procederConVehiculo(res[0].id);
         } else if (res.length > 1) {
+          this.toastr.error('Selecciona un vehiculo para continuar');
           this.vehiculos = res;
           this.showModal = true;
         }
